@@ -48,7 +48,7 @@
 #define BOARD_REV 10
 
 // turn debug output via serial on/off
-#define DEBUG_SERIAL 0
+#define DEBUG_SERIAL 1
 
 // local time interval (us)
 #define TTAG_INT (250)
@@ -60,9 +60,15 @@
 //------------------------------------------------------------------------------
 // global variables
 
-   
 // local time
 static uint32_t sTtag = 0;
+
+// D0-D4 interrupt timers
+volatile byte sLastPIND = 0;
+volatile uint32_t sDataIntDt[NUM_STRINGS] = {0};
+volatile uint32_t sDataIntLast[NUM_STRINGS] = {0};
+volatile uint32_t sZCIntTime = 0;
+
 
 
 //------------------------------------------------------------------------------
@@ -84,98 +90,32 @@ void setup()
     TIMSK1 |= (1 << OCIE1A);
 
     // I/O pin setup
-    // 74LS165 LOAD and CLK are output, DATA is input
-    // 74HC595 LOAD, CLK and DATA are output
-    DDRD = B11111001;
-    // nano LED output on pin 13, testmode jumper on pin 10
-    DDRB = B00100000;
-    // activate the pullups for the testmode pins
-    PORTB |= B00001111;
-    // OE on A1, DBG on A2, current meas on A0
-    DDRC = B00000110;
-    // keep OE high
-    PORTC |= B00000010;
+    // D2-D7 are inputs
+    DDRD = 0;
 
-    // Configure the ADC clock to 1MHz by setting the prescaler to 16.
-    // This should allow for fast analog pin sampling without much loss of precision.
-    // defines for setting and clearing register bits.
-    _SFR_BYTE(ADCSRA) |= _BV(ADPS2);
-    _SFR_BYTE(ADCSRA) &= ~_BV(ADPS1);
-    _SFR_BYTE(ADCSRA) &= ~_BV(ADPS0);
-
-    // initialize the data
-    memset(sMatrixState, 0, sizeof(sMatrixState));
-
-    // load the configuration from EEPROM
-    int err;
-    bool cfgLoaded = loadCfg(&err);
-    if (cfgLoaded == false)
-    {
-        // set default configuration
-        setDefaultCfg();
-
-        // store the configuration to EEPROM
-        saveCfgToEEPROM();
-    }
-
-    // Apply the configuration
-    // This will prepare all values for the interrupt handlers.
-    applyCfg();
+    // activate pin change interrupts on D2-D7
+    PCICR |= 0b00000100;
+    PCMSK2 |= 0b11111100;
+    // clear any outstanding interrupts
+    PCIFR = 0;
 
     // enable serial output at 115200 baudrate
     Serial.begin(115200);
-    Serial.print("afterglow v");
-    Serial.print(AFTERGLOW_VERSION);
-    Serial.println(" (c) 2018 morbid cornflakes");
+    Serial.print("Afterglow GI v");
+    Serial.print(AFTERGLOW_GI_VERSION);
+    Serial.println(" (c) 2019 morbid cornflakes");
     // check the extended fuse for brown out detection level
     uint8_t efuse = boot_lock_fuse_bits_get(GET_EXTENDED_FUSE_BITS);
     Serial.println("-----------------------------------------------");
     uint8_t bodBits = (efuse & 0x7);
     Serial.print("efuse BOD ");
     Serial.println((bodBits == 0x07) ? "OFF" : (bodBits == 0x04) ? "4.3V" : (bodBits == 0x05) ? "2.7V" : "1.8V");
-#ifdef REPLAY_ENABLED
-    Serial.print("Replay Table Size: ");
-    Serial.println(numReplays());
-#endif
-#if DEBUG_SERIAL
-    Serial.print("CFG from ");
-    Serial.print(cfgLoaded ? "EEPROM" : "DEFAULT");
-    if (err)
-    {
-        Serial.print(" err ");
-        Serial.print(err);
-    }
-    Serial.println("");
-#endif
 
     // enable all interrupts
     interrupts();
 
     // enable a strict 15ms watchdog
     wdt_enable(WDTO_15MS);
-}
-
-//------------------------------------------------------------------------------
-void start()
-{
-    // enable the timer compare interrupt
-    TIMSK1 |= (1 << OCIE1A);
-
-    // enable a strict 15ms watchdog
-    wdt_enable(WDTO_15MS);
-}
-
-//------------------------------------------------------------------------------
-void stop()
-{
-    // disable the watchdog
-    wdt_disable();
-
-    // disable the timer compare interrupt
-    TIMSK1 &= ~(1 << OCIE1A);
-
-    // pull OE high to disable all outputs
-    PORTC |= B00000010;
 }
 
 //------------------------------------------------------------------------------
@@ -193,6 +133,56 @@ ISR(TIMER1_COMPA_vect)
 }
 
 //------------------------------------------------------------------------------
+// Pin change interrupt on D2-D7 handler
+// This is measuring the zero-crossing to blank signal time.
+ISR(PCINT2_vect)
+{
+    // check which pin triggered this interrupt
+    byte newPins = (sLastPIND ^ PIND);
+    sLastPIND = PIND;
+
+    // what time is it?
+    uint32_t t = micros();
+
+    if (newPins == B10000000)
+    {
+        // handle zero crossing interrupts
+
+        // The zero crossing signal should appear at 100Hz. If we're closer to
+        // last interrupt then this is the falling edge and we should ignore it.
+        if ((t - sZCIntTime) > 4000)
+        {
+            // just remember the last zero crossing interrupt time
+            sZCIntTime = t;
+        }
+    }
+    else
+    {
+        // which pins triggered?
+        uint8_t pinBit = 0B00000100; // start with D2
+        for (uint8_t pinNum=0; pinNum<NUM_STRINGS; pinNum++, pinBit<<=1)
+        {
+            // measure and store the time since the last zero crossing interrupt
+            if (newPins & pinBit)
+            {
+                // handle only once
+                uint32_t dtLast = (t - sDataIntLast[pinNum]);
+                if (dtLast > 1000)
+                {
+                    uint32_t dt = (t - sZCIntTime);
+                    if (dt < 10000)
+                    {
+                        // store the delta time
+                        sDataIntDt[pinNum] = dt;
+                    }
+                    sDataIntLast[pinNum] = t;
+                }
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
 void loop()
 {
     // The main loop is used for low priority serial communication only.
@@ -205,6 +195,16 @@ void loop()
 #if DEBUG_SERIAL
     if ((loopCounter % 10) == 0)
     {
+        Serial.print("ZC - ");
+        Serial.print(sZCIntTime);
+        Serial.println("us");
+        for (uint8_t i=0; i<NUM_STRINGS; i++)
+        {
+            Serial.print(i);
+            Serial.print(" - ");
+            Serial.print(sDataIntDt[i]);
+            Serial.println("us");
+        }
 	}
 #endif
 
