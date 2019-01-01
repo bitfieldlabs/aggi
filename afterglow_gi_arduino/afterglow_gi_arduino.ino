@@ -68,7 +68,7 @@ volatile byte sLastPIND = 0;
 volatile uint32_t sDataIntDt[NUM_STRINGS] = {0};
 volatile uint32_t sDataIntLast[NUM_STRINGS] = {0};
 volatile uint32_t sZCIntTime = 0;
-
+volatile uint8_t sInterruptsSeen = 0;
 
 
 //------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ ISR(PCINT2_vect)
 
     if (newPins == B10000000)
     {
-        // handle zero crossing interrupts
+        // Handle zero crossing interrupts
 
         // The zero crossing signal should appear at 100Hz. If we're closer to
         // last interrupt then this is the falling edge and we should ignore it.
@@ -154,28 +154,50 @@ ISR(PCINT2_vect)
         {
             // just remember the last zero crossing interrupt time
             sZCIntTime = t;
+
+            // All strings without interrupt in the past interval are either fully
+            // on or off
+            if ((sInterruptsSeen & 0B00000100) == 0) sDataIntDt[0] = (PIND & 0B00000100) ? 0xffffffff : 0;
+            if ((sInterruptsSeen & 0B00001000) == 0) sDataIntDt[1] = (PIND & 0B00001000) ? 0xffffffff : 0;
+            if ((sInterruptsSeen & 0B00010000) == 0) sDataIntDt[2] = (PIND & 0B00010000) ? 0xffffffff : 0;
+            if ((sInterruptsSeen & 0B00100000) == 0) sDataIntDt[3] = (PIND & 0B00100000) ? 0xffffffff : 0;
+            if ((sInterruptsSeen & 0B01000000) == 0) sDataIntDt[4] = (PIND & 0B01000000) ? 0xffffffff : 0;
+            /*
+            uint8_t pinBit = 0B00000100; // start with D2
+            for (uint8_t pinNum=0; pinNum<NUM_STRINGS; pinNum++, pinBit<<=1)
+            {
+                if ((sInterruptsSeen & pinBit) == 0)
+                {
+                    sDataIntDt[pinNum] = (PIND & pinBit) ? 0xffffffff : 0;
+                }
+            }
+            */
+    
+            // Clear the interrupts mask
+            sInterruptsSeen = 0;
         }
     }
     else
     {
-        // which pins triggered?
+        // Handle all triggered interrupts
         uint8_t pinBit = 0B00000100; // start with D2
         for (uint8_t pinNum=0; pinNum<NUM_STRINGS; pinNum++, pinBit<<=1)
         {
-            // measure and store the time since the last zero crossing interrupt
+            // Measure and store the time since the last zero crossing interrupt
             if (newPins & pinBit)
             {
-                // handle only once
+                // Handle only once
                 uint32_t dtLast = (t - sDataIntLast[pinNum]);
                 if (dtLast > 1000)
                 {
                     uint32_t dt = (t - sZCIntTime);
                     if (dt < 10000)
                     {
-                        // store the delta time
+                        // Store the delta time
                         sDataIntDt[pinNum] = dt;
                     }
                     sDataIntLast[pinNum] = t;
+                    sInterruptsSeen |= pinBit;
                 }
             }
         }
@@ -188,7 +210,7 @@ void loop()
     // The main loop is used for low priority serial communication only.
     // All the fun stuff happens in the interrupt handlers.
 
-    // count the loops (used for debug output below)
+    // Count the loops (used for debug output below)
     static uint32_t loopCounter = 0;
     loopCounter++;
 
