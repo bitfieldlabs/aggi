@@ -27,7 +27,18 @@
  *  +----------+---------------+-----------+---------------+--------------+
  *  | Name     | Function      | Nano Pin# | Register, Bit | Mode         |
  *  +----------+---------------+-----------+---------------+--------------+
- *  | IN_DATA  | 74LS165 Q_H   | D2        | DDRD, 2       | Input        |
+ *  | STR1_IN  | D0 Data Bus   | D2        | DDRD, 2       | Input        |
+ *  | STR2_IN  | D1 Data Bus   | D3        | DDRD, 3       | Input        |
+ *  | STR3_IN  | D2 Data Bus   | D4        | DDRD, 4       | Input        |
+ *  | STR4_IN  | D3 Data Bus   | D5        | DDRD, 5       | Input        |
+ *  | STR5_IN  | D4 Data Bus   | D6        | DDRD, 6       | Input        |
+ *  | ZC       | Zero Crossing | D7        | DDRD, 7       | Input        |
+ *  | STR1_OUT | STR 1 Enable  | D8        | DDRB, 0       | Output       |
+ *  | STR2_OUT | STR 2 Enable  | D9        | DDRB, 1       | Output       |
+ *  | STR3_OUT | STR 3 Enable  | D10       | DDRB, 2       | Output       |
+ *  | STR4_OUT | STR 4 Enable  | D11       | DDRB, 3       | Output       |
+ *  | STR5_OUT | STR 5 Enable  | D12       | DDRB, 4       | Output       |
+ *  | POT      | Potentiometer | A1        | DDRC, 1       | Input        |
  *  +----------+---------------+-----------+---------------+--------------+
 */
 
@@ -51,7 +62,7 @@
 #define DEBUG_SERIAL 1
 
 // local time interval (us)
-#define TTAG_INT (250)
+#define TTAG_INT (125)
 
 // number of GI strings
 #define NUM_STRINGS 5
@@ -61,14 +72,14 @@
 // global variables
 
 // local time
-static uint32_t sTtag = 0;
+static volatile uint32_t sTtag = 0;
 
 // D0-D4 interrupt timers
-volatile byte sLastPIND = 0;
-volatile uint32_t sDataIntDt[NUM_STRINGS] = {0};
-volatile uint32_t sDataIntLast[NUM_STRINGS] = {0};
-volatile uint32_t sZCIntTime = 0;
-volatile uint8_t sInterruptsSeen = 0;
+static byte sLastPIND = 0;
+static uint32_t sDataIntLast[NUM_STRINGS] = {0};
+static uint32_t sZCIntTime = 0;
+static uint8_t sInterruptsSeen = 0;
+static volatile uint32_t sDataIntDt[NUM_STRINGS] = {0};
 
 
 //------------------------------------------------------------------------------
@@ -92,6 +103,9 @@ void setup()
     // I/O pin setup
     // D2-D7 are inputs
     DDRD = 0;
+    // D8-D12 are outputs, pull them low
+    DDRB |= B00011111;
+    PORTB &= B11100000;
 
     // activate pin change interrupts on D2-D7
     PCICR |= 0b00000100;
@@ -120,14 +134,17 @@ void setup()
 
 //------------------------------------------------------------------------------
 // Timer1 interrupt handler
-// This is the realtime task heartbeat. All the magic happens here.
+// This is the realtime task heartbeat. All the output magic happens here.
 ISR(TIMER1_COMPA_vect)
 {
-    // time is running
+    // Time is ticking
     uint16_t startCnt = TCNT1;
     sTtag++;
 
-    // kick the dog
+    // Update all GI strings
+    updateGI(0, );
+
+    // Kick the dog
     wdt_reset();
 
 }
@@ -137,6 +154,23 @@ ISR(TIMER1_COMPA_vect)
 // This is measuring the zero-crossing to blank signal time.
 ISR(PCINT2_vect)
 {
+    // The WPC CPU issues a short signal to turn on the triac controlling the
+    // AC voltage. The Triac will stay on until the next zero crossing of the
+    // AC signal.
+    // The closer the signal is to the zero crossing, the brighter the lamps
+    // will be. If no signal is issued at all (stays high), the lamps will light
+    // at full power. If the signal remains low, the lamps are turned off.
+    // The zero crossing signal is issued with twice the AC frequency, i.e. with
+    // 100Hz or every 10ms in Europe.
+
+    // ZC Sig          TR Sig        ZC Sig          ZC     Zero Crossing Signal
+    // |                |            |               TR     Triac enable signal
+    // |--+  |  |  |  | v|  |  |  |  |--+            B0-B6  Brightness 1-7 levels (WPC GI)
+    // |ZC|                          |ZC|
+    // |  |B7 B6 B5 B4 B3 B2 B1      |  |
+    // +-----------------------------+------
+    // 0ms                           10ms
+
     // check which pin triggered this interrupt
     byte newPins = (sLastPIND ^ PIND);
     sLastPIND = PIND;
