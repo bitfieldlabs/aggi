@@ -62,8 +62,7 @@
 #define DEBUG_SERIAL 1
 
 // local time interval (us)
-#define TTAG_INT 1000
-
+#define TTAG_INT 1024
 // Number of GI strings
 #define NUM_STRINGS 5
 
@@ -99,15 +98,16 @@ void setup()
     // Use Timer1 to create an interrupt every TTAG_INT us.
     // This will be the heartbeat of our realtime task.
     noInterrupts(); // disable all interrupts
-    TCCR1A = 0;
     TCCR1B = 0;
+
     // set compare match register for TTAG_INT us increments
-    // prescaler is at 1, so counting real clock cycles
-    OCR1A = (TTAG_INT * 16);  // [16MHz clock cycles]
+    // prescaler is at 64, so counting 64 x real clock cycles
+    OCR1A = (TTAG_INT / 16);  // [16MHz x 64 (prescaler) clock cycles]
     // turn on CTC mode
     TCCR1B |= (1 << WGM12);
-    // Set CS10 bit so timer runs at clock speed
-    TCCR1B |= (1 << CS10);  
+    // Set CS10 and CS11 bits to set prescaler to 64
+    TCCR1B |= (1 << CS10);
+    TCCR1B |= (1 << CS11);
     // enable timer compare interrupt
     TIMSK1 |= (1 << OCIE1A);
 
@@ -286,10 +286,11 @@ void loop()
     // Count the loops (used for debug output below)
     static uint32_t loopCounter = 0;
     loopCounter++;
-
 #if DEBUG_SERIAL
     if ((loopCounter % 10) == 0)
     {
+        Serial.print("T ");
+        Serial.println(sTtag);
         Serial.print("ZC - ");
         Serial.print(sZCIntTime);
         Serial.println("us");
