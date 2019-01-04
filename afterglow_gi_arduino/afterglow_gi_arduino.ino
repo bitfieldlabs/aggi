@@ -205,6 +205,8 @@ void handlePinInterrupts()
     // at full power. If the signal remains low, the lamps are turned off.
     // The zero crossing signal is issued with twice the AC frequency, i.e. with
     // 100Hz or every 10ms in Europe.
+    // The scope says the ZC signal is 1ms long while the Triac signal is only
+    // ~8us long.
 
     // ZC Sig          TR Sig        ZC Sig          ZC     Zero Crossing Signal
     // |                |            |               TR     Triac enable signal
