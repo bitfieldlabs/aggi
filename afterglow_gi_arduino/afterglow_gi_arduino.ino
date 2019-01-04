@@ -195,9 +195,7 @@ void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t str
 }
 
 //------------------------------------------------------------------------------
-// Pin change interrupt on D2-D7 handler
-// This is measuring the zero-crossing to blank signal time.
-ISR(PCINT2_vect)
+void handlePinInterrupts()
 {
     // The WPC CPU issues a short signal to turn on the triac controlling the
     // AC voltage. The Triac will stay on until the next zero crossing of the
@@ -217,10 +215,10 @@ ISR(PCINT2_vect)
     // 0ms                           10ms
 
     // check which pins triggered this interrupt
-    byte newPinD = (sLastPIND ^ PIND);
-    sLastPIND = PIND;
     byte newPinB = (sLastPINB ^ PINB);
     sLastPINB = PINB;
+    byte newPinD = (sLastPIND ^ PIND);
+    sLastPIND = PIND;
 
     // what time is it?
     uint32_t t = micros();
@@ -257,6 +255,24 @@ ISR(PCINT2_vect)
         handlePinChange(t, newPinB, B00000001, 3); // String 3 on D8
         handlePinChange(t, newPinB, B00010000, 4); // String 4 on D12
     }
+}
+
+//------------------------------------------------------------------------------
+// Pin change interrupt on D2-D7 handler
+// This is measuring the zero-crossing to blank signal time.
+ISR(PCINT0_vect)
+{
+    // handle the interrupts
+    handlePinInterrupts();
+}
+
+//------------------------------------------------------------------------------
+// Pin change interrupt on D2-D7 handler
+// This is measuring the zero-crossing to blank signal time.
+ISR(PCINT2_vect)
+{
+    // handle the interrupts
+    handlePinInterrupts();
 }
 
 //------------------------------------------------------------------------------
