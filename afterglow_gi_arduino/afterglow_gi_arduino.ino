@@ -30,14 +30,14 @@
  *  | STR1_IN  | D0 Data Bus   | D2        | DDRD, 2       | Input        |
  *  | STR2_IN  | D1 Data Bus   | D3        | DDRD, 3       | Input        |
  *  | STR3_IN  | D2 Data Bus   | D4        | DDRD, 4       | Input        |
- *  | STR4_IN  | D3 Data Bus   | D5        | DDRD, 5       | Input        |
- *  | STR5_IN  | D4 Data Bus   | D6        | DDRD, 6       | Input        |
+ *  | STR4_IN  | D3 Data Bus   | D8        | DDRB, 0       | Input        |
+ *  | STR5_IN  | D4 Data Bus   | D12       | DDRB, 4       | Input        |
  *  | ZC       | Zero Crossing | D7        | DDRD, 7       | Input        |
- *  | STR1_OUT | STR 1 Enable  | D8        | DDRB, 0       | Output       |
- *  | STR2_OUT | STR 2 Enable  | D9        | DDRB, 1       | Output       |
- *  | STR3_OUT | STR 3 Enable  | D10       | DDRB, 2       | Output       |
- *  | STR4_OUT | STR 4 Enable  | D11       | DDRB, 3       | Output       |
- *  | STR5_OUT | STR 5 Enable  | D12       | DDRB, 4       | Output       |
+ *  | STR1_OUT | STR 1 PWM     | D5        | DDRD, 5       | Output       |
+ *  | STR2_OUT | STR 2 PWM     | D9        | DDRB, 1       | Output       |
+ *  | STR3_OUT | STR 3 PWM     | D10       | DDRB, 2       | Output       |
+ *  | STR4_OUT | STR 4 PWM     | D11       | DDRB, 3       | Output       |
+ *  | STR5_OUT | STR 5 PWM     | D6        | DDRD, 6       | Output       |
  *  | POT      | Potentiometer | A1        | DDRC, 1       | Input        |
  *  +----------+---------------+-----------+---------------+--------------+
 */
@@ -62,22 +62,16 @@
 #define DEBUG_SERIAL 1
 
 // local time interval (us)
-#define TTAG_INT 125
-
-// PWM frequency [Hz]
-#define PWM_FREQ 200
-
-// Full PWM cycle (us)
-#define PWM_FULL_CYCLE (1000000UL / PWM_FREQ)
-
-// Number of PWM steps in a full cycle
-#define PWM_NUM_STEPS (PWM_FULL_CYCLE / TTAG_INT)
+#define TTAG_INT 1000
 
 // Number of GI strings
 #define NUM_STRINGS 5
 
 // Number of brightness steps
-#define NUM_BRIGHTNESS 7
+#define NUM_BRIGHTNESS 8
+
+// PWM resolution (given by the Arduino HW)
+#define PWM_NUM_STEPS 255
 
 
 //------------------------------------------------------------------------------
@@ -87,13 +81,15 @@
 static volatile uint32_t sTtag = 0;
 
 static byte sLastPIND = 0;
+static byte sLastPINB = 0;
 static uint32_t sDataIntLast[NUM_STRINGS] = {0};
 static uint8_t sBrightnessN[NUM_STRINGS] = {0};
 static uint32_t sZCIntTime = 0;
 static uint8_t sInterruptsSeen = 0;
 static volatile uint8_t sBrightness[NUM_STRINGS] = {0};
+static volatile uint8_t sBrightnessChanged = 0;
 
-static uint8_t sCycleTable[PWM_NUM_STEPS] = {0};
+static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0};
 static uint8_t sVoltage = 120; // 12V
 
 
@@ -116,15 +112,19 @@ void setup()
     TIMSK1 |= (1 << OCIE1A);
 
     // I/O pin setup
-    // D2-D7 are inputs
-    DDRD = 0;
-    // D8-D13 are outputs, pull them low
-    DDRB |= B00111111;
-    PORTB &= B11100000;
+    // D2-D4, D7-D8 and D12 are inputs
+    DDRD &= B01100011;
+    DDRB &= B11101110;
+    // D5, D6 and D9-D11 are outputs, pull them low
+    DDRC |= B01100000;
+    DDRB |= B00001110;
+    PORTC &= B10011111;
+    PORTB &= B11110001;
 
-    // activate pin change interrupts on D2-D7
-    PCICR |= 0b00000100;
-    PCMSK2 |= 0b11111100;
+    // activate pin change interrupts on D2-D4, D7-D8 and D12 (interrupt masks 0 and 2)
+    PCICR |= 0b00000101;
+    PCMSK0 |= 0b00010001; // D8 and D12
+    PCMSK2 |= 0b10011100; // D2-D4 and D7
     // clear any outstanding interrupts
     PCIFR = 0;
 
@@ -140,8 +140,8 @@ void setup()
     Serial.print("efuse BOD ");
     Serial.println((bodBits == 0x07) ? "OFF" : (bodBits == 0x04) ? "4.3V" : (bodBits == 0x05) ? "2.7V" : "1.8V");
 
-    // populate the cycle table
-    populateCycleTable(sVoltage);
+    // populate the duty cycle table
+    populateDutyCycleTable(sVoltage);
 
     // enable all interrupts
     interrupts();
@@ -156,20 +156,42 @@ void setup()
 ISR(TIMER1_COMPA_vect)
 {
     // Time is ticking
-    uint16_t startCnt = TCNT1;
     sTtag++;
 
     // Update all GI strings
-    uint8_t cycle = (sTtag % PWM_NUM_STEPS);
-    updateGI(0, cycle, sBrightness[0]);
-    updateGI(1, cycle, sBrightness[1]);
-    updateGI(2, cycle, sBrightness[2]);
-    updateGI(3, cycle, sBrightness[3]);
-    updateGI(4, cycle, sBrightness[4]);
+    updateGI();
 
     // Kick the dog
     //wdt_reset();
 
+}
+
+//------------------------------------------------------------------------------
+void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t string)
+{
+    // Measure and store the time since the last zero crossing interrupt
+    if (newPinMask & pinBit)
+    {
+        // Handle only once
+        uint32_t dtLast = (t - sDataIntLast[string]);
+        if (dtLast > 1000)
+        {
+            uint8_t stringBit = (1<<string);
+            uint32_t dt = (t - sZCIntTime);
+            if (dt < 10000)
+            {
+                // Translate delta time into brightness
+                uint8_t newBrightness = dtToBrightness(dt);
+                if (newBrightness != sBrightness[string])
+                {
+                    sBrightnessChanged |= stringBit;
+                }
+                sBrightness[string] = newBrightness;
+            }
+            sDataIntLast[string] = t;
+            sInterruptsSeen |= stringBit;
+        }
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -194,14 +216,16 @@ ISR(PCINT2_vect)
     // +-----------------------------+------
     // 0ms                           10ms
 
-    // check which pin triggered this interrupt
-    byte newPins = (sLastPIND ^ PIND);
+    // check which pins triggered this interrupt
+    byte newPinD = (sLastPIND ^ PIND);
     sLastPIND = PIND;
+    byte newPinB = (sLastPINB ^ PINB);
+    sLastPINB = PINB;
 
     // what time is it?
     uint32_t t = micros();
 
-    if (newPins == B10000000)
+    if (newPinD == B10000000) // ZC on D7
     {
         // Handle zero crossing interrupts
 
@@ -214,21 +238,11 @@ ISR(PCINT2_vect)
 
             // All strings without interrupt in the past interval are either fully
             // on or off
-            if ((sInterruptsSeen & 0B00000100) == 0) sBrightness[0] = (PIND & 0B00000100) ? 8 : 0;
-            if ((sInterruptsSeen & 0B00001000) == 0) sBrightness[1] = (PIND & 0B00001000) ? 8 : 0;
-            if ((sInterruptsSeen & 0B00010000) == 0) sBrightness[2] = (PIND & 0B00010000) ? 8 : 0;
-            if ((sInterruptsSeen & 0B00100000) == 0) sBrightness[3] = (PIND & 0B00100000) ? 8 : 0;
-            if ((sInterruptsSeen & 0B01000000) == 0) sBrightness[4] = (PIND & 0B01000000) ? 8 : 0;
-            /*
-            uint8_t pinBit = 0B00000100; // start with D2
-            for (uint8_t pinNum=0; pinNum<NUM_STRINGS; pinNum++, pinBit<<=1)
-            {
-                if ((sInterruptsSeen & pinBit) == 0)
-                {
-                    sDataIntDt[pinNum] = (PIND & pinBit) ? 0xffffffff : 0;
-                }
-            }
-            */
+            if ((sInterruptsSeen & 0x01) == 0) sBrightness[0] = (PIND & 0B00000100) ? NUM_BRIGHTNESS : 0;
+            if ((sInterruptsSeen & 0x02) == 0) sBrightness[1] = (PIND & 0B00001000) ? NUM_BRIGHTNESS : 0;
+            if ((sInterruptsSeen & 0x04) == 0) sBrightness[2] = (PIND & 0B00010000) ? NUM_BRIGHTNESS: 0;
+            if ((sInterruptsSeen & 0x08) == 0) sBrightness[3] = (PINB & 0B00000001) ? NUM_BRIGHTNESS : 0;
+            if ((sInterruptsSeen & 0x10) == 0) sBrightness[4] = (PINB & 0B00010000) ? NUM_BRIGHTNESS : 0;
     
             // Clear the interrupts mask
             sInterruptsSeen = 0;
@@ -236,28 +250,12 @@ ISR(PCINT2_vect)
     }
     else
     {
-        // Handle all triggered interrupts
-        uint8_t pinBit = 0B00000100; // start with D2
-        for (uint8_t pinNum=0; pinNum<NUM_STRINGS; pinNum++, pinBit<<=1)
-        {
-            // Measure and store the time since the last zero crossing interrupt
-            if (newPins & pinBit)
-            {
-                // Handle only once
-                uint32_t dtLast = (t - sDataIntLast[pinNum]);
-                if (dtLast > 1000)
-                {
-                    uint32_t dt = (t - sZCIntTime);
-                    if (dt < 10000)
-                    {
-                        // Translate delta time into brightness
-                        sBrightness[pinNum] = dtToBrightness(dt);
-                    }
-                    sDataIntLast[pinNum] = t;
-                    sInterruptsSeen |= pinBit;
-                }
-            }
-        }
+        // Handle all strings
+        handlePinChange(t, newPinD, B00000100, 0); // String 0 on D2
+        handlePinChange(t, newPinD, B00001000, 1); // String 1 on D3
+        handlePinChange(t, newPinD, B00010000, 2); // String 2 on D4
+        handlePinChange(t, newPinB, B00000001, 3); // String 3 on D8
+        handlePinChange(t, newPinB, B00010000, 4); // String 4 on D12
     }
 }
 
@@ -297,7 +295,7 @@ uint8_t dtToBrightness(uint32_t dt)
     if (dt < 1000)
     {
         // full power, this shouldn't really happen
-        b = 8;
+        b = NUM_BRIGHTNESS;
     }
     else if (dt < 2000)
     {
@@ -331,23 +329,19 @@ uint8_t dtToBrightness(uint32_t dt)
 }
 
 //------------------------------------------------------------------------------
-void updateGI(uint8_t string, uint8_t cycle, uint8_t brightness)
+void updateGI()
 {
-    // Check whether the GI string should be currently lit
-    if (brightness >= sCycleTable[cycle])
-    {
-        // Light the string
-        PORTB |= (1 << string);
-    }
-    else
-    {
-        // Turn the string off
-        PORTB &= ~ (1 << string);
-    }
+    // Adjust the PWM if required
+    if (sBrightnessChanged & 0x01) analogWrite(5, sDutyCycleTable[sBrightness[0]]);
+    if (sBrightnessChanged & 0x02) analogWrite(9, sDutyCycleTable[sBrightness[1]]);
+    if (sBrightnessChanged & 0x04) analogWrite(10, sDutyCycleTable[sBrightness[2]]);
+    if (sBrightnessChanged & 0x08) analogWrite(11, sDutyCycleTable[sBrightness[3]]);
+    if (sBrightnessChanged & 0x10) analogWrite(6, sDutyCycleTable[sBrightness[4]]);
+    sBrightnessChanged = 0;
 }
 
 //------------------------------------------------------------------------------
-void populateCycleTable(uint8_t voltage)
+void populateDutyCycleTable(uint8_t voltage)
 {
     // Assume 6.3V LEDs with 3.2V drop -> 124 Ohm resistor for 25mA current
     uint32_t c = ((uint32_t)voltage - 32)*100/124;
@@ -358,19 +352,11 @@ void populateCycleTable(uint8_t voltage)
     Serial.print("max dc ");
     Serial.print(dc);
     Serial.println("%");
-    for (uint8_t i=0; i<PWM_NUM_STEPS; i++)
+    for (uint8_t i=1; i<=NUM_BRIGHTNESS; i++)
     {
-        if (i<maxDC)
-        {
-            uint8_t b = (i * NUM_BRIGHTNESS / maxDC) + 1;
-            sCycleTable[i] = b;
-        }
-        else
-        {
-            sCycleTable[i] = 255;  // never reach this brightness -> always off
-        }
+        sDutyCycleTable[i] = (i*maxDC/NUM_BRIGHTNESS);
         Serial.print(i);
         Serial.print(" - ");
-        Serial.println(sCycleTable[i]);
+        Serial.println(sDutyCycleTable[i]);
     }
 }
