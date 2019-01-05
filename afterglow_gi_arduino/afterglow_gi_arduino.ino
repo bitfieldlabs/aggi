@@ -272,11 +272,11 @@ void handlePinInterrupts()
 
             // All strings without interrupt in the past interval are either fully
             // on or off
-            if ((sInterruptsSeen & 0x01) == 0) sBrightness[0] = (PIND & 0B00000100) ? NUM_BRIGHTNESS : 0;
-            if ((sInterruptsSeen & 0x02) == 0) sBrightness[1] = (PIND & 0B00001000) ? NUM_BRIGHTNESS : 0;
-            if ((sInterruptsSeen & 0x04) == 0) sBrightness[2] = (PIND & 0B00010000) ? NUM_BRIGHTNESS: 0;
-            if ((sInterruptsSeen & 0x08) == 0) sBrightness[3] = (PINB & 0B00000001) ? NUM_BRIGHTNESS : 0;
-            if ((sInterruptsSeen & 0x10) == 0) sBrightness[4] = (PINB & 0B00010000) ? NUM_BRIGHTNESS : 0;
+            if ((sInterruptsSeen & 0x01) == 0) sBrightness[0] = (PIND & 0B00000100) ? 0: NUM_BRIGHTNESS;
+            if ((sInterruptsSeen & 0x02) == 0) sBrightness[1] = (PIND & 0B00001000) ? 0: NUM_BRIGHTNESS;
+            if ((sInterruptsSeen & 0x04) == 0) sBrightness[2] = (PIND & 0B00010000) ? 0: NUM_BRIGHTNESS;
+            if ((sInterruptsSeen & 0x08) == 0) sBrightness[3] = (PINB & 0B00000001) ? 0: NUM_BRIGHTNESS;
+            if ((sInterruptsSeen & 0x10) == 0) sBrightness[4] = (PINB & 0B00010000) ? 0: NUM_BRIGHTNESS;
     
             // Clear the interrupts mask
             sInterruptsSeen = 0;
