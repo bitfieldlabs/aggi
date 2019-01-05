@@ -72,6 +72,9 @@
 // PWM resolution (given by the Arduino HW)
 #define PWM_NUM_STEPS 255
 
+// Number of brightness history entries
+#define NUM_HISTORY 5
+
 
 //------------------------------------------------------------------------------
 // global variables
@@ -86,10 +89,17 @@ static uint8_t sBrightnessN[NUM_STRINGS] = {0};
 static uint32_t sZCIntTime = 0;
 static uint8_t sInterruptsSeen = 0;
 static volatile uint8_t sBrightness[NUM_STRINGS] = {0};
+static volatile uint8_t sBrightnessHistory[NUM_STRINGS][NUM_HISTORY] = {0};
+static volatile uint8_t sBrightnessHistoryIndex[NUM_STRINGS] = {0};
 static volatile uint8_t sBrightnessChanged = 0;
 
 static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0};
 static uint8_t sVoltage = 120; // 12V
+
+#if DEBUG_SERIAL
+static volatile uint32_t sMinDt[NUM_STRINGS] = {0};
+static volatile uint32_t sMaxDt[NUM_STRINGS] = {0};
+#endif
 
 
 //------------------------------------------------------------------------------
@@ -187,6 +197,10 @@ void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t str
                     sBrightnessChanged |= stringBit;
                 }
                 sBrightness[string] = newBrightness;
+#if DEBUG_SERIAL
+                if ((dt < sMinDt[string]) || (sMinDt[string] == 0)) sMinDt[string] = dt;
+                if (dt > sMaxDt[string]) sMaxDt[string] = dt;
+#endif
             }
             sDataIntLast[string] = t;
             sInterruptsSeen |= stringBit;
@@ -225,7 +239,7 @@ void handlePinInterrupts()
     // what time is it?
     uint32_t t = micros();
 
-    if (newPinD == B10000000) // ZC on D7
+    if (newPinD & B10000000) // ZC on D7
     {
         // Handle zero crossing interrupts
 
@@ -248,15 +262,13 @@ void handlePinInterrupts()
             sInterruptsSeen = 0;
         }
     }
-    else
-    {
-        // Handle all strings
-        handlePinChange(t, newPinD, B00000100, 0); // String 0 on D2
-        handlePinChange(t, newPinD, B00001000, 1); // String 1 on D3
-        handlePinChange(t, newPinD, B00010000, 2); // String 2 on D4
-        handlePinChange(t, newPinB, B00000001, 3); // String 3 on D8
-        handlePinChange(t, newPinB, B00010000, 4); // String 4 on D12
-    }
+
+    // Handle all strings
+    handlePinChange(t, newPinD, B00000100, 0); // String 0 on D2
+    handlePinChange(t, newPinD, B00001000, 1); // String 1 on D3
+    handlePinChange(t, newPinD, B00010000, 2); // String 2 on D4
+    handlePinChange(t, newPinB, B00000001, 3); // String 3 on D8
+    handlePinChange(t, newPinB, B00010000, 4); // String 4 on D12
 }
 
 //------------------------------------------------------------------------------
@@ -298,9 +310,20 @@ void loop()
         {
             Serial.print(i);
             Serial.print(" - ");
-            Serial.println(sBrightness[i]);
+            Serial.print(sBrightness[i]);
+            Serial.print(" min ");
+            Serial.print(sMinDt[i]);
+            Serial.print(" max ");
+            Serial.println(sMaxDt[i]);
         }
 	}
+    if ((loopCounter % 100) == 0)
+    {
+        for (uint8_t i=0; i<NUM_STRINGS; i++)
+        {
+            sMinDt[i] = sMaxDt[i] = 0;
+        }
+   }
 #endif
 
     // wait 500ms
@@ -311,32 +334,32 @@ void loop()
 uint8_t dtToBrightness(uint32_t dt)
 {
     uint8_t b;
-    if (dt < 1000)
+    if (dt < 1200)
     {
         // full power, this shouldn't really happen
         b = NUM_BRIGHTNESS;
     }
-    else if (dt < 2000)
+    else if (dt < 2200)
     {
         b = 6;
     }
-    else if (dt < 3000)
+    else if (dt < 3200)
     {
         b = 5;
     }
-    else if (dt < 4000)
+    else if (dt < 4200)
     {
         b = 4;
     }
-    else if (dt < 5000)
+    else if (dt < 5200)
     {
         b = 3;
     }
-    else if (dt < 6000)
+    else if (dt < 6200)
     {
         b = 2;
     }
-    else if (dt < 7000)
+    else if (dt < 7200)
     {
         b = 1;
     }
