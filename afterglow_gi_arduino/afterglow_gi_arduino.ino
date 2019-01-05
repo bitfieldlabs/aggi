@@ -182,6 +182,30 @@ ISR(TIMER1_COMPA_vect)
 }
 
 //------------------------------------------------------------------------------
+void newBrightness(uint8_t string, uint8_t stringBit, uint8_t b)
+{
+    // Check whether the brightness has changed
+    if ((b != BRIGHTNESS_UNCERTAIN) && (b != sBrightness[string]))
+    {
+        // Add the current brightness value to the histogram
+        if (sBrightnessHist[b] < 0xffff)
+        {
+            sBrightnessHist[b]++;
+        }
+
+        // Only switch when some measurements in the center of the
+        // brightness interval have been seen
+        if (sBrightnessHist[b] > BRIGHTNESS_SWITCH_THRESH)
+        {
+            // switch to the new brightness value
+            sBrightness[string] = b;
+            sBrightnessChanged |= stringBit;
+            memset((void*)sBrightnessHist, 0, sizeof(sBrightnessHist));
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
 void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t string)
 {
     // Measure and store the time since the last zero crossing interrupt
@@ -198,25 +222,9 @@ void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t str
                 // Translate delta time into brightness
                 uint8_t b = dtToBrightness(dt);
 
-                // Check whether the brightness has changed
-                if ((b != BRIGHTNESS_UNCERTAIN) && (b != sBrightness[string]))
-                {
-                    // Add the current brightness value to the histogram
-                    if (sBrightnessHist[b] < 0xffff)
-                    {
-                        sBrightnessHist[b]++;
-                    }
+                // Handle the new brightness value
+                newBrightness(string, stringBit, b);
 
-                    // Only switch when some measurements in the center of the
-                    // brightness interval have been seen
-                    if (sBrightnessHist[b] > BRIGHTNESS_SWITCH_THRESH)
-                    {
-                        // switch to the new brightness value
-                        sBrightness[string] = b;
-                        sBrightnessChanged |= stringBit;
-                        memset((void*)sBrightnessHist, 0, sizeof(sBrightnessHist));
-                    }
-                }
 #if DEBUG_SERIAL
                 if ((dt < sMinDt[string]) || (sMinDt[string] == 0)) sMinDt[string] = dt;
                 if (dt > sMaxDt[string]) sMaxDt[string] = dt;
@@ -250,13 +258,13 @@ void handlePinInterrupts()
     // +-----------------------------+------
     // 0ms                           10ms
 
-    // check which pins triggered this interrupt
+    // Check which pins triggered this interrupt
     byte newPinB = (sLastPINB ^ PINB);
     sLastPINB = PINB;
     byte newPinD = (sLastPIND ^ PIND);
     sLastPIND = PIND;
 
-    // what time is it?
+    // What time is it?
     uint32_t t = micros();
 
     if (newPinD & B10000000) // ZC on D7
@@ -267,16 +275,16 @@ void handlePinInterrupts()
         // last interrupt then this is the falling edge and we should ignore it.
         if ((t - sZCIntTime) > 4000)
         {
-            // just remember the last zero crossing interrupt time
+            // Just remember the last zero crossing interrupt time
             sZCIntTime = t;
 
             // All strings without interrupt in the past interval are either fully
             // on or off
-            if ((sInterruptsSeen & 0x01) == 0) sBrightness[0] = (PIND & 0B00000100) ? 0: NUM_BRIGHTNESS;
-            if ((sInterruptsSeen & 0x02) == 0) sBrightness[1] = (PIND & 0B00001000) ? 0: NUM_BRIGHTNESS;
-            if ((sInterruptsSeen & 0x04) == 0) sBrightness[2] = (PIND & 0B00010000) ? 0: NUM_BRIGHTNESS;
-            if ((sInterruptsSeen & 0x08) == 0) sBrightness[3] = (PINB & 0B00000001) ? 0: NUM_BRIGHTNESS;
-            if ((sInterruptsSeen & 0x10) == 0) sBrightness[4] = (PINB & 0B00010000) ? 0: NUM_BRIGHTNESS;
+            if ((sInterruptsSeen & 0x01) == 0) newBrightness(0, 0x01, (PIND & 0B00000100) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x02) == 0) newBrightness(1, 0x02, (PIND & 0B00001000) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x04) == 0) newBrightness(2, 0x04, (PIND & 0B00010000) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x08) == 0) newBrightness(3, 0x08, (PINB & 0B00000001) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x10) == 0) newBrightness(4, 0x10, (PINB & 0B00010000) ? 0: NUM_BRIGHTNESS);
     
             // Clear the interrupts mask
             sInterruptsSeen = 0;
