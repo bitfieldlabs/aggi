@@ -72,8 +72,14 @@
 // PWM resolution (given by the Arduino HW)
 #define PWM_NUM_STEPS 255
 
-// Number of brightness history entries
-#define NUM_HISTORY 5
+// Number of center brightness values required to switch value
+#define BRIGHTNESS_SWITCH_THRESH 5
+
+// Brightness interval margin to account for overlapping intervals [us]
+#define BRIGHTNESS_INTERVAL_MARGIN 150
+
+// Uncertain brightness value
+#define BRIGHTNESS_UNCERTAIN 255
 
 
 //------------------------------------------------------------------------------
@@ -89,9 +95,8 @@ static uint8_t sBrightnessN[NUM_STRINGS] = {0};
 static uint32_t sZCIntTime = 0;
 static uint8_t sInterruptsSeen = 0;
 static volatile uint8_t sBrightness[NUM_STRINGS] = {0};
-static volatile uint8_t sBrightnessHistory[NUM_STRINGS][NUM_HISTORY] = {0};
-static volatile uint8_t sBrightnessHistoryIndex[NUM_STRINGS] = {0};
 static volatile uint8_t sBrightnessChanged = 0;
+static volatile uint16_t sBrightnessHist[NUM_BRIGHTNESS+1] = {0};
 
 static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0};
 static uint8_t sVoltage = 120; // 12V
@@ -191,12 +196,27 @@ void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t str
             if (dt < 10000)
             {
                 // Translate delta time into brightness
-                uint8_t newBrightness = dtToBrightness(dt);
-                if (newBrightness != sBrightness[string])
+                uint8_t b = dtToBrightness(dt);
+
+                // Check whether the brightness has changed
+                if ((b != BRIGHTNESS_UNCERTAIN) && (b != sBrightness[string]))
                 {
-                    sBrightnessChanged |= stringBit;
+                    // Add the current brightness value to the histogram
+                    if (sBrightnessHist[b] < 0xffff)
+                    {
+                        sBrightnessHist[b]++;
+                    }
+
+                    // Only switch when some measurements in the center of the
+                    // brightness interval have been seen
+                    if (sBrightnessHist[b] > BRIGHTNESS_SWITCH_THRESH)
+                    {
+                        // switch to the new brightness value
+                        sBrightness[string] = b;
+                        sBrightnessChanged |= stringBit;
+                        memset((void*)sBrightnessHist, 0, sizeof(sBrightnessHist));
+                    }
                 }
-                sBrightness[string] = newBrightness;
 #if DEBUG_SERIAL
                 if ((dt < sMinDt[string]) || (sMinDt[string] == 0)) sMinDt[string] = dt;
                 if (dt > sMaxDt[string]) sMaxDt[string] = dt;
@@ -333,39 +353,50 @@ void loop()
 //------------------------------------------------------------------------------
 uint8_t dtToBrightness(uint32_t dt)
 {
+    // This function leaves some margin at the interval borders to account for
+    // the fact the intervals are slightly overlapping and therefore a
+    // unambiguous brightness determination is not always possible. In this case
+    // the function returns 255.
+
     uint8_t b;
-    if (dt < 1200)
+    if (dt < (1200+BRIGHTNESS_INTERVAL_MARGIN))
     {
         // full power, this shouldn't really happen
         b = NUM_BRIGHTNESS;
     }
-    else if (dt < 2200)
+    else if (dt < (2200-BRIGHTNESS_INTERVAL_MARGIN))
     {
         b = 6;
     }
-    else if (dt < 3200)
+    else if ((dt > (2200+BRIGHTNESS_INTERVAL_MARGIN)) &&
+             (dt < (3200-BRIGHTNESS_INTERVAL_MARGIN)))
     {
         b = 5;
     }
-    else if (dt < 4200)
+    else if ((dt > (3200+BRIGHTNESS_INTERVAL_MARGIN)) &&
+             (dt < (4200-BRIGHTNESS_INTERVAL_MARGIN)))
     {
         b = 4;
     }
-    else if (dt < 5200)
+    else if ((dt > (4200+BRIGHTNESS_INTERVAL_MARGIN)) &&
+             (dt < (5200-BRIGHTNESS_INTERVAL_MARGIN)))
     {
         b = 3;
     }
-    else if (dt < 6200)
+    else if ((dt > (5200+BRIGHTNESS_INTERVAL_MARGIN)) &&
+             (dt < (6200-BRIGHTNESS_INTERVAL_MARGIN)))
     {
         b = 2;
     }
-    else if (dt < 7200)
+    else if ((dt > (6200+BRIGHTNESS_INTERVAL_MARGIN)) &&
+             (dt < (7200-BRIGHTNESS_INTERVAL_MARGIN)))
     {
         b = 1;
     }
     else
     {
-        b = 0;
+        // invalid interval
+        b = BRIGHTNESS_UNCERTAIN;
     }
     return b;
 }
