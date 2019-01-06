@@ -367,12 +367,13 @@ uint8_t dtToBrightness(uint32_t dt)
     // the function returns 255.
 
     uint8_t b;
-    if (dt < (1200+BRIGHTNESS_INTERVAL_MARGIN))
+    if (dt < (1200-BRIGHTNESS_INTERVAL_MARGIN))
     {
         // full power, this shouldn't really happen
         b = NUM_BRIGHTNESS;
     }
-    else if (dt < (2200-BRIGHTNESS_INTERVAL_MARGIN))
+    else if ((dt > (1200+BRIGHTNESS_INTERVAL_MARGIN)) &&
+             (dt < (2200-BRIGHTNESS_INTERVAL_MARGIN)))
     {
         b = 6;
     }
@@ -440,4 +441,5 @@ void populateDutyCycleTable(uint8_t voltage)
         Serial.print(" - ");
         Serial.println(sDutyCycleTable[i]);
     }
+    sDutyCycleTable[1] = 1; // darkest possible
 }
