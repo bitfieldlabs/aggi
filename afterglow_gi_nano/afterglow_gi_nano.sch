@@ -42,7 +42,7 @@ U 1 1 5C2F7ADE
 P 1750 4400
 F 0 "U1" H 1400 5350 50  0000 C CNN
 F 1 "74LS374" H 1400 5250 50  0000 C CNN
-F 2 "Housings_DIP:DIP-20_W7.62mm_LongPads" H 1750 4400 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-20W_7.5x12.8mm_Pitch1.27mm" H 1750 4400 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS374" H 1750 4400 50  0001 C CNN
 	1    1750 4400
 	1    0    0    -1  
@@ -95,7 +95,7 @@ U 1 1 5C2F87F9
 P 3600 1350
 F 0 "J2" H 3494 1025 50  0000 C CNN
 F 1 "POWER_CONN" H 3700 1100 50  0000 C CNN
-F 2 "Connectors_Molex:Molex_KK-41791-02_02x3.96mm_Straight" H 3600 1350 50  0001 C CNN
+F 2 "Connectors_Terminal_Blocks:TerminalBlock_Philmore_TB132_02x5mm_Straight" H 3600 1350 50  0001 C CNN
 F 3 "~" H 3600 1350 50  0001 C CNN
 	1    3600 1350
 	-1   0    0    1   
@@ -221,21 +221,16 @@ $EndComp
 $Comp
 L power:+12V #PWR0104
 U 1 1 5C2FAA66
-P 4250 1000
-F 0 "#PWR0104" H 4250 850 50  0001 C CNN
-F 1 "+12V" H 4265 1173 50  0000 C CNN
-F 2 "" H 4250 1000 50  0001 C CNN
-F 3 "" H 4250 1000 50  0001 C CNN
-	1    4250 1000
+P 3900 1000
+F 0 "#PWR0104" H 3900 850 50  0001 C CNN
+F 1 "+12V" H 3915 1173 50  0000 C CNN
+F 2 "" H 3900 1000 50  0001 C CNN
+F 3 "" H 3900 1000 50  0001 C CNN
+	1    3900 1000
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4100 1250 4250 1250
-Connection ~ 4250 1250
-Wire Wire Line
-	4250 1250 4400 1250
-Wire Wire Line
-	4250 1250 4250 1000
+	3900 1250 3900 1000
 Wire Wire Line
 	4250 1350 4250 1750
 Wire Wire Line
@@ -261,7 +256,6 @@ Text Label 4700 2500 0    50   ~ 0
 5V
 Wire Wire Line
 	4400 1400 4400 1250
-Connection ~ 4400 1250
 Wire Wire Line
 	4400 1250 4500 1250
 Wire Wire Line
@@ -461,8 +455,8 @@ T3
 Text Label 2250 4300 0    50   ~ 0
 T4
 Wire Wire Line
-	4400 1250 4400 1100
-Text Label 4400 1100 0    50   ~ 0
+	4000 1250 4000 1100
+Text Label 4000 1100 0    50   ~ 0
 12V
 $Comp
 L Device:R R2
@@ -3130,12 +3124,12 @@ Wire Wire Line
 $Comp
 L Device:D D6
 U 1 1 5C3DDC36
-P 3950 1250
-F 0 "D6" H 3950 1034 50  0000 C CNN
-F 1 "D" H 3950 1125 50  0000 C CNN
-F 2 "Diodes_THT:D_5W_P10.16mm_Horizontal" H 3950 1250 50  0001 C CNN
-F 3 "~" H 3950 1250 50  0001 C CNN
-	1    3950 1250
+P 4250 1250
+F 0 "D6" H 4250 1034 50  0000 C CNN
+F 1 "D" H 4250 1125 50  0000 C CNN
+F 2 "Diodes_THT:D_5W_P10.16mm_Horizontal" H 4250 1250 50  0001 C CNN
+F 3 "~" H 4250 1250 50  0001 C CNN
+	1    4250 1250
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
@@ -3195,94 +3189,6 @@ F 3 "~" H 4400 1500 50  0001 C CNN
 	1    4400 1500
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector_Generic:Conn_02x17_Odd_Even J6
-U 1 1 5C44FDE0
-P 3050 2500
-F 0 "J6" H 3100 1475 50  0000 C CNN
-F 1 "Conn_02x17_Odd_Even" H 3100 1566 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x17_Pitch2.54mm" H 3050 2500 50  0001 C CNN
-F 3 "~" H 3050 2500 50  0001 C CNN
-	1    3050 2500
-	-1   0    0    1   
-$EndComp
-Text Label 3250 1800 0    50   ~ 0
-BLANK
-Text Label 3250 1900 0    50   ~ 0
-D0
-Text Label 3250 2000 0    50   ~ 0
-D1
-Text Label 3250 2100 0    50   ~ 0
-D2
-Text Label 3250 2200 0    50   ~ 0
-D3
-Text Label 3250 2300 0    50   ~ 0
-D4
-Text Label 3250 2400 0    50   ~ 0
-D5
-Text Label 3250 2500 0    50   ~ 0
-D6
-Text Label 3250 2600 0    50   ~ 0
-D7
-Text Label 3250 2700 0    50   ~ 0
-TRIAC
-Text Label 2750 1700 2    50   ~ 0
-ZC
-Wire Wire Line
-	2750 1900 2550 1900
-Wire Wire Line
-	2550 1900 2550 2000
-Wire Wire Line
-	2550 2700 2750 2700
-Connection ~ 2550 2700
-Wire Wire Line
-	2550 2700 2550 2800
-Wire Wire Line
-	2750 2600 2550 2600
-Connection ~ 2550 2600
-Wire Wire Line
-	2550 2600 2550 2700
-Wire Wire Line
-	2550 2500 2750 2500
-Connection ~ 2550 2500
-Wire Wire Line
-	2550 2500 2550 2600
-Wire Wire Line
-	2750 2400 2550 2400
-Connection ~ 2550 2400
-Wire Wire Line
-	2550 2400 2550 2500
-Wire Wire Line
-	2550 2300 2750 2300
-Connection ~ 2550 2300
-Wire Wire Line
-	2550 2300 2550 2400
-Wire Wire Line
-	2750 2200 2550 2200
-Connection ~ 2550 2200
-Wire Wire Line
-	2550 2200 2550 2300
-Wire Wire Line
-	2550 2100 2750 2100
-Connection ~ 2550 2100
-Wire Wire Line
-	2550 2100 2550 2200
-Wire Wire Line
-	2750 2000 2550 2000
-Connection ~ 2550 2000
-Wire Wire Line
-	2550 2000 2550 2100
-$Comp
-L power:GND #PWR01
-U 1 1 5C44FE0B
-P 2550 2800
-F 0 "#PWR01" H 2550 2550 50  0001 C CNN
-F 1 "GND" H 2555 2627 50  0000 C CNN
-F 2 "" H 2550 2800 50  0001 C CNN
-F 3 "" H 2550 2800 50  0001 C CNN
-	1    2550 2800
-	1    0    0    -1  
-$EndComp
 Text Label 1250 1150 2    50   ~ 0
 PIN32
 Text Label 1250 2150 2    50   ~ 0
@@ -3311,32 +3217,13 @@ Text Label 1750 2650 0    50   ~ 0
 PIN1
 Text Label 1750 1050 0    50   ~ 0
 PIN33
-Text Label 3250 1700 0    50   ~ 0
-PIN33
-Text Label 3250 2800 0    50   ~ 0
-PIN11
-Text Label 3250 2900 0    50   ~ 0
-PIN9
-Text Label 3250 3000 0    50   ~ 0
-PIN7
-Text Label 3250 3100 0    50   ~ 0
-PIN5
-Text Label 3250 3200 0    50   ~ 0
-PIN3
-Text Label 3250 3300 0    50   ~ 0
-PIN1
-Text Label 2750 2800 2    50   ~ 0
-PIN12
-Text Label 2750 1800 2    50   ~ 0
-PIN32
-Text Label 2750 3000 2    50   ~ 0
-PIN8
-Text Label 2750 2900 2    50   ~ 0
-PIN10
-Text Label 2750 3100 2    50   ~ 0
-PIN6
-Text Label 2750 3200 2    50   ~ 0
-PIN4
-Text Label 2750 3300 2    50   ~ 0
-PIN2
+Wire Wire Line
+	3800 1250 3900 1250
+Connection ~ 3900 1250
+Wire Wire Line
+	3900 1250 4000 1250
+Connection ~ 4000 1250
+Connection ~ 4400 1250
+Wire Wire Line
+	4000 1250 4100 1250
 $EndSCHEMATC
