@@ -84,7 +84,7 @@ U 1 1 5C2F862F
 P 5550 3850
 F 0 "RV1" H 5481 3896 50  0000 R CNN
 F 1 "R_POT_TRIM" H 5481 3805 50  0000 R CNN
-F 2 "Potentiometers:Potentiometer_Trimmer_Piher_PT-6v_Horizontal" H 5550 3850 50  0001 C CNN
+F 2 "Potentiometers:Potentiometer_Trimmer_Piher_PT-10v10_Horizontal_Px10.0mm_Py5.0mm" H 5550 3850 50  0001 C CNN
 F 3 "~" H 5550 3850 50  0001 C CNN
 	1    5550 3850
 	-1   0    0    -1  
