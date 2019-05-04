@@ -52,9 +52,6 @@
 // Afterglow GI version number
 #define AFTERGLOW_GI_VERSION 100
 
-// Afterglow configuration version
-#define AFTERGLOW_CFG_VERSION 1
-
 // Afterglow GI board revision. Currently v1.0.
 #define BOARD_REV 10
 
@@ -63,6 +60,7 @@
 
 // local time interval (us)
 #define TTAG_INT 1024
+
 // Number of GI strings
 #define NUM_STRINGS 5
 
@@ -185,7 +183,7 @@ ISR(TIMER1_COMPA_vect)
 void newBrightness(uint8_t string, uint8_t stringBit, uint8_t b)
 {
     // Check whether the brightness has changed
-    if ((b != BRIGHTNESS_UNCERTAIN) && (b != sBrightness[string]))
+    if ((b <= NUM_BRIGHTNESS) && (b != sBrightness[string]))
     {
         // Add the current brightness value to the histogram
         if (sBrightnessHist[b] < 0xffff)
