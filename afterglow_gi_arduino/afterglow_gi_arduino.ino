@@ -79,6 +79,15 @@
 // Uncertain brightness value
 #define BRIGHTNESS_UNCERTAIN 255
 
+// Brightness interpolation duration [2^n ms, e.g. 8=256ms]
+#define BRIGHTNESS_INTERPOL_DURBITS 8
+
+// Brightness interpolation steps (2^n, e.g. 3=8 steps)
+#define BRIGHTNESS_INTERPOL_STEPBITS 3
+
+// Duration of an interpolation step [2^n ms]
+#define BRIGHTNESS_INTERPOL_INTBITS (BRIGHTNESS_INTERPOL_DURBITS - BRIGHTNESS_INTERPOL_STEPBITS)
+
 
 //------------------------------------------------------------------------------
 // global variables
@@ -93,10 +102,12 @@ static uint8_t sBrightnessN[NUM_STRINGS] = {0};
 static uint32_t sZCIntTime = 0;
 static uint8_t sInterruptsSeen = 0;
 static volatile uint8_t sBrightness[NUM_STRINGS] = {0};
-static volatile uint8_t sBrightnessChanged = 0;
-static volatile uint16_t sBrightnessHist[NUM_BRIGHTNESS+1] = {0};
+static volatile uint8_t sBrightnessTarget[NUM_STRINGS] = {0};
+static volatile uint32_t sBrightnessLastUpd[NUM_STRINGS] = {0};
+static volatile uint8_t sBrightnessIntLastStep[NUM_STRINGS];
+static volatile uint16_t sBrightnessHist[NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
 
-static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0};
+static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
 static uint8_t sVoltage = 120; // 12V
 
 #if DEBUG_SERIAL
@@ -156,6 +167,9 @@ void setup()
     // populate the duty cycle table
     populateDutyCycleTable(sVoltage);
 
+    // initialize data
+    memset((void*)sBrightnessIntLastStep, 255, sizeof(sBrightnessIntLastStep));
+
     // enable all interrupts
     interrupts();
 
@@ -183,7 +197,7 @@ ISR(TIMER1_COMPA_vect)
 void newBrightness(uint8_t string, uint8_t stringBit, uint8_t b)
 {
     // Check whether the brightness has changed
-    if ((b <= NUM_BRIGHTNESS) && (b != sBrightness[string]))
+    if ((b <= NUM_BRIGHTNESS) && (b != sBrightnessTarget[string]))
     {
         // Add the current brightness value to the histogram
         if (sBrightnessHist[b] < 0xffff)
@@ -195,9 +209,12 @@ void newBrightness(uint8_t string, uint8_t stringBit, uint8_t b)
         // brightness interval have been seen
         if (sBrightnessHist[b] > BRIGHTNESS_SWITCH_THRESH)
         {
-            // switch to the new brightness value
-            sBrightness[string] = b;
-            sBrightnessChanged |= stringBit;
+            // abort current interpolation if not done yet
+            sBrightness[string] = sBrightnessTarget[string];
+
+            // switch to the new brightness target value
+            sBrightnessTarget[string] = b;
+            sBrightnessLastUpd[string] = sTtag;
             memset((void*)sBrightnessHist, 0, sizeof(sBrightnessHist));
         }
     }
@@ -411,13 +428,70 @@ uint8_t dtToBrightness(uint32_t dt)
 //------------------------------------------------------------------------------
 void updateGI()
 {
-    // Adjust the PWM if required
-    if (sBrightnessChanged & 0x01) analogWrite(5, sDutyCycleTable[sBrightness[0]]);
-    if (sBrightnessChanged & 0x02) analogWrite(9, sDutyCycleTable[sBrightness[1]]);
-    if (sBrightnessChanged & 0x04) analogWrite(10, sDutyCycleTable[sBrightness[2]]);
-    if (sBrightnessChanged & 0x08) analogWrite(11, sDutyCycleTable[sBrightness[3]]);
-    if (sBrightnessChanged & 0x10) analogWrite(6, sDutyCycleTable[sBrightness[4]]);
-    sBrightnessChanged = 0;
+    static const uint8_t skPWMPins[NUM_STRINGS] = {5, 9, 10, 11, 6};
+
+    // update all brightness values
+    for (uint8_t i=0; i<NUM_STRINGS; i++)
+    {
+        if (sBrightness[i] != sBrightnessTarget[i])
+        {
+            uint32_t dt = (sTtag - sBrightnessLastUpd[i]);
+            uint32_t step = (dt >> BRIGHTNESS_INTERPOL_INTBITS);
+            int16_t b1 = 0;
+            int16_t b2 = 0;
+            uint8_t b;
+            bool newB = false;
+            if (step >= (1 << BRIGHTNESS_INTERPOL_STEPBITS))
+            {
+                // target brightness reached
+                sBrightness[i] = sBrightnessTarget[i];
+                sBrightnessIntLastStep[i] = 255;
+                step = (1 << BRIGHTNESS_INTERPOL_STEPBITS);
+                b = sDutyCycleTable[sBrightness[i]];
+                newB = true;
+            }
+            else if (step != sBrightnessIntLastStep[i])
+            {
+                // Adjust the PWM if required
+                b1 = sDutyCycleTable[sBrightness[i]];
+                b2 = sDutyCycleTable[sBrightnessTarget[i]];
+                b = (uint8_t)(b1 + ((b2 - b1) >> BRIGHTNESS_INTERPOL_STEPBITS) * step);
+                newB = true;
+                sBrightnessIntLastStep[i] = step;
+            }
+
+            // apply the new PWM value
+            if (newB)
+            {
+                analogWrite(skPWMPins[i], b);
+ #if DEBUG_SERIAL && 0
+                if (i==2)
+                {
+                    Serial.print("[");
+                    Serial.print(i);
+                    Serial.print(" / ");
+                    Serial.print(step);
+                    Serial.print("] ");
+                    Serial.print(sTtag);
+                    Serial.print(" ");
+                    Serial.print(dt);
+                    Serial.print(" - ");
+                    Serial.print(sBrightness[i]);
+                    Serial.print(" (");
+                    Serial.print(b1);
+                    Serial.print(")");
+                    Serial.print("->");
+                    Serial.print(sBrightnessTarget[i]);
+                    Serial.print(" (");
+                    Serial.print(b2);
+                    Serial.print(")");
+                    Serial.print(" ");
+                    Serial.println(b);
+                }
+#endif
+            }
+        }
+    }
 }
 
 //------------------------------------------------------------------------------
