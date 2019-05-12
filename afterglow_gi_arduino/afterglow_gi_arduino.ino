@@ -105,7 +105,7 @@ static volatile uint8_t sBrightness[NUM_STRINGS] = {0};
 static volatile uint8_t sBrightnessTarget[NUM_STRINGS] = {0};
 static volatile uint32_t sBrightnessLastUpd[NUM_STRINGS] = {0};
 static volatile uint8_t sBrightnessIntLastStep[NUM_STRINGS];
-static volatile uint16_t sBrightnessHist[NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
+static volatile uint8_t sBrightnessHist[NUM_STRINGS][NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
 
 static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
 static uint8_t sVoltage = 120; // 12V
@@ -194,28 +194,33 @@ ISR(TIMER1_COMPA_vect)
 }
 
 //------------------------------------------------------------------------------
-void newBrightness(uint8_t string, uint8_t stringBit, uint8_t b)
+void newBrightness(uint8_t string, uint8_t b)
 {
     // Check whether the brightness has changed
-    if ((b <= NUM_BRIGHTNESS) && (b != sBrightnessTarget[string]))
+    if (b <= NUM_BRIGHTNESS)
     {
         // Add the current brightness value to the histogram
-        if (sBrightnessHist[b] < 0xffff)
+        if (sBrightnessHist[string][b] < 0xff)
         {
-            sBrightnessHist[b]++;
+            sBrightnessHist[string][b]++;
         }
 
         // Only switch when some measurements in the center of the
         // brightness interval have been seen
-        if (sBrightnessHist[b] > BRIGHTNESS_SWITCH_THRESH)
+        if (sBrightnessHist[string][b] > BRIGHTNESS_SWITCH_THRESH)
         {
-            // abort current interpolation if not done yet
-            sBrightness[string] = sBrightnessTarget[string];
+            if (b != sBrightnessTarget[string])
+            {
+                // abort current interpolation if not done yet
+                sBrightness[string] = sBrightnessTarget[string];
+    
+                // switch to the new brightness target value
+                sBrightnessTarget[string] = b;
+                sBrightnessLastUpd[string] = sTtag;
+            }
 
-            // switch to the new brightness target value
-            sBrightnessTarget[string] = b;
-            sBrightnessLastUpd[string] = sTtag;
-            memset((void*)sBrightnessHist, 0, sizeof(sBrightnessHist));
+            // clear the histogram
+            memset((void*)&(sBrightnessHist[string][0]), 0, NUM_BRIGHTNESS+1);
         }
     }
 }
@@ -238,7 +243,7 @@ void handlePinChange(uint32_t t, uint8_t newPinMask, uint8_t pinBit, uint8_t str
                 uint8_t b = dtToBrightness(dt);
 
                 // Handle the new brightness value
-                newBrightness(string, stringBit, b);
+                newBrightness(string, b);
 
 #if DEBUG_SERIAL
                 if ((dt < sMinDt[string]) || (sMinDt[string] == 0)) sMinDt[string] = dt;
@@ -295,11 +300,11 @@ void handlePinInterrupts()
 
             // All strings without interrupt in the past interval are either fully
             // on or off
-            if ((sInterruptsSeen & 0x01) == 0) newBrightness(0, 0x01, (PIND & 0B00000100) ? 0: NUM_BRIGHTNESS);
-            if ((sInterruptsSeen & 0x02) == 0) newBrightness(1, 0x02, (PIND & 0B00001000) ? 0: NUM_BRIGHTNESS);
-            if ((sInterruptsSeen & 0x04) == 0) newBrightness(2, 0x04, (PIND & 0B00010000) ? 0: NUM_BRIGHTNESS);
-            if ((sInterruptsSeen & 0x08) == 0) newBrightness(3, 0x08, (PINB & 0B00000001) ? 0: NUM_BRIGHTNESS);
-            if ((sInterruptsSeen & 0x10) == 0) newBrightness(4, 0x10, (PINB & 0B00010000) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x01) == 0) newBrightness(0, (PIND & 0B00000100) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x02) == 0) newBrightness(1, (PIND & 0B00001000) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x04) == 0) newBrightness(2, (PIND & 0B00010000) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x08) == 0) newBrightness(3, (PINB & 0B00000001) ? 0: NUM_BRIGHTNESS);
+            if ((sInterruptsSeen & 0x10) == 0) newBrightness(4, (PINB & 0B00010000) ? 0: NUM_BRIGHTNESS);
     
             // Clear the interrupts mask
             sInterruptsSeen = 0;
