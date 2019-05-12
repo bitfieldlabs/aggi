@@ -455,7 +455,9 @@ void updateGI()
                 // Adjust the PWM if required
                 b1 = sDutyCycleTable[sBrightness[i]];
                 b2 = sDutyCycleTable[sBrightnessTarget[i]];
-                b = (uint8_t)(b1 + ((b2 - b1) >> BRIGHTNESS_INTERPOL_STEPBITS) * step);
+                int16_t diff = (b2 - b1);
+                int16_t stepSize = (diff > 0) ? (diff >> BRIGHTNESS_INTERPOL_STEPBITS) : -((-diff) >> BRIGHTNESS_INTERPOL_STEPBITS);
+                b = (uint8_t)(b1 + stepSize * step);
                 newB = true;
                 sBrightnessIntLastStep[i] = step;
             }
@@ -465,7 +467,7 @@ void updateGI()
             {
                 analogWrite(skPWMPins[i], b);
  #if DEBUG_SERIAL && 0
-                if (i==2)
+                if (i==1)
                 {
                     Serial.print("[");
                     Serial.print(i);
