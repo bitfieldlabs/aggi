@@ -106,6 +106,7 @@ static volatile uint8_t sBrightnessTarget[NUM_STRINGS] = {0};
 static volatile uint32_t sBrightnessLastUpd[NUM_STRINGS] = {0};
 static volatile uint8_t sBrightnessIntLastStep[NUM_STRINGS];
 static volatile uint8_t sBrightnessHist[NUM_STRINGS][NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
+static volatile uint32_t sBrightnessPot = 0;
 
 static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
 static uint8_t sVoltage = 120; // 12V
@@ -169,6 +170,9 @@ void setup()
 
     // initialize data
     memset((void*)sBrightnessIntLastStep, 255, sizeof(sBrightnessIntLastStep));
+
+    // read the global brightness (potientometer) value
+    sBrightnessPot = analogRead(A1);
 
     // enable all interrupts
     interrupts();
@@ -354,6 +358,8 @@ void loop()
         Serial.print("ZC - ");
         Serial.print(sZCIntTime);
         Serial.println("us");
+        Serial.print("Global Br ");
+        Serial.println(sBrightnessPot);
         for (uint8_t i=0; i<NUM_STRINGS; i++)
         {
             Serial.print(i);
@@ -470,6 +476,18 @@ void updateGI()
             // apply the new PWM value
             if (newB)
             {
+                // scale the brightness with the potentiometer value
+                uint8_t scaledB = (uint8_t)(((uint32_t)b * sBrightnessPot) >> 10);
+                if ((scaledB == 0) && (b != 0))
+                {
+                    b = 1; // minimum brightness
+                }
+                else
+                {
+                    b = scaledB; // scaled brightness
+                }
+
+                // apply the PWM
                 analogWrite(skPWMPins[i], b);
  #if DEBUG_SERIAL && 0
                 if (i==1)
