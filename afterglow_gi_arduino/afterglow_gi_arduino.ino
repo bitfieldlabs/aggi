@@ -527,16 +527,38 @@ void populateDutyCycleTable(uint8_t voltage)
     uint8_t dc = (uint8_t)(25 * 100 / c);
     uint8_t maxDC = (PWM_NUM_STEPS * dc / 100);
 
-    Serial.println("CYCLE TABLE");
-    Serial.print("max dc ");
-    Serial.print(dc);
-    Serial.println("%");
+    Serial.print("CYCLE TABLE");
+
+#if 0
+    // linear distribution
+    sDutyCycleTable[1] = 1; // darkest possible
+    for (uint8_t i=2; i<=NUM_BRIGHTNESS; i++)
+    {
+        sDutyCycleTable[i] = ((i-1)*maxDC/(NUM_BRIGHTNESS-1));
+    }
+    Serial.println(" LIN");
+#else
+    // logarithmic distribution
+    uint32_t r = (maxDC - 1);
+    double m = log10(NUM_BRIGHTNESS);
+    double s = 1.0/m;
     for (uint8_t i=1; i<=NUM_BRIGHTNESS; i++)
     {
-        sDutyCycleTable[i] = (i*maxDC/NUM_BRIGHTNESS);
+        sDutyCycleTable[i] = 1 + r - floor(log10(NUM_BRIGHTNESS-i+1) * s * (double)r);
+    }
+    Serial.println(" LOG");
+#endif
+
+    // print the table
+    Serial.print("max dc ");
+    Serial.print(dc);
+    Serial.print("% = ");
+    Serial.print(maxDC);
+    Serial.println("");
+    for (uint8_t i=1; i<=NUM_BRIGHTNESS; i++)
+    {
         Serial.print(i);
         Serial.print(" - ");
         Serial.println(sDutyCycleTable[i]);
     }
-    sDutyCycleTable[1] = 1; // darkest possible
 }
