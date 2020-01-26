@@ -3262,7 +3262,7 @@ U 1 1 5E292827
 P 5900 1300
 F 0 "J6" H 6008 1981 50  0000 C CNN
 F 1 "Conn_01x12_Male" H 6008 1890 50  0000 C CNN
-F 2 "Connectors_Molex:Molex_KK-6410-12_12x2.54mm_Straight" H 5900 1300 50  0001 C CNN
+F 2 "Connectors_Molex:Molex_KK-41791-12_10x3.96mm_Straight" H 5900 1300 50  0001 C CNN
 F 3 "~" H 5900 1300 50  0001 C CNN
 	1    5900 1300
 	1    0    0    -1  
