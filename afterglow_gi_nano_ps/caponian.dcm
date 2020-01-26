@@ -1,0 +1,7 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LT4320_CAP
+D LT4320 ideal diode bridge controller
+$ENDCMP
+#
+#End Doc Library
