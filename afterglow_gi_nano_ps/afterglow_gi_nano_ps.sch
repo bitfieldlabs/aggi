@@ -3491,8 +3491,6 @@ Wire Wire Line
 Connection ~ 9500 1050
 Wire Wire Line
 	9500 1050 9700 1050
-Wire Wire Line
-	6900 3100 6900 2950
 Text Label 6900 2950 0    50   ~ 0
 OUT_DC
 $Comp
@@ -3577,4 +3575,9 @@ Wire Wire Line
 	6250 1000 6450 1000
 Wire Wire Line
 	6750 1000 8800 1000
+Wire Wire Line
+	6600 3100 6600 2950
+Wire Wire Line
+	6600 2950 6900 2950
+Connection ~ 6600 3100
 $EndSCHEMATC
