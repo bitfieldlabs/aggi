@@ -16,12 +16,12 @@ $EndDescr
 $Comp
 L Regulator_Linear:L7805 U2
 U 1 1 5C2F77B7
-P 7300 3100
-F 0 "U2" H 7300 3342 50  0000 C CNN
-F 1 "L7805" H 7300 3251 50  0000 C CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 7325 2950 50  0001 L CIN
-F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b3/b0/12/d4/47/88/CD00000444.pdf/files/CD00000444.pdf/jcr:content/translations/en.CD00000444.pdf" H 7300 3050 50  0001 C CNN
-	1    7300 3100
+P 7300 3350
+F 0 "U2" H 7300 3592 50  0000 C CNN
+F 1 "L7805" H 7300 3501 50  0000 C CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 7325 3200 50  0001 L CIN
+F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/41/4f/b3/b0/12/d4/47/88/CD00000444.pdf/files/CD00000444.pdf/jcr:content/translations/en.CD00000444.pdf" H 7300 3300 50  0001 C CNN
+	1    7300 3350
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -49,21 +49,21 @@ $EndComp
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q1
 U 1 1 5C2F7E46
-P 3400 1150
-F 0 "Q1" H 3507 1203 60  0000 L CNN
-F 1 "FQP30N06L" H 3507 1097 60  0000 L CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 3600 1350 60  0001 L CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 3600 1450 60  0001 L CNN
-F 4 "FQP30N06L-ND" H 3600 1550 60  0001 L CNN "Digi-Key_PN"
-F 5 "FQP30N06L" H 3600 1650 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 3600 1750 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 3600 1850 60  0001 L CNN "Family"
-F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 3600 1950 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 3600 2050 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET N-CH 60V 32A TO-220" H 3600 2150 60  0001 L CNN "Description"
-F 11 "ON Semiconductor" H 3600 2250 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 3600 2350 60  0001 L CNN "Status"
-	1    3400 1150
+P 3050 1150
+F 0 "Q1" H 3157 1203 60  0000 L CNN
+F 1 "FQP30N06L" H 3157 1097 60  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 3250 1350 60  0001 L CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 3250 1450 60  0001 L CNN
+F 4 "FQP30N06L-ND" H 3250 1550 60  0001 L CNN "Digi-Key_PN"
+F 5 "FQP30N06L" H 3250 1650 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 3250 1750 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 3250 1850 60  0001 L CNN "Family"
+F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 3250 1950 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 3250 2050 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET N-CH 60V 32A TO-220" H 3250 2150 60  0001 L CNN "Description"
+F 11 "ON Semiconductor" H 3250 2250 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 3250 2350 60  0001 L CNN "Status"
+	1    3050 1150
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -91,12 +91,12 @@ $EndComp
 $Comp
 L Connector:Conn_01x02_Female J2
 U 1 1 5C2F87F9
-P 6100 3200
-F 0 "J2" H 5994 2875 50  0000 C CNN
-F 1 "POWER_CONN" H 6200 2950 50  0000 C CNN
-F 2 "Connectors_Terminal_Blocks:TerminalBlock_Philmore_TB132_02x5mm_Straight" H 6100 3200 50  0001 C CNN
-F 3 "~" H 6100 3200 50  0001 C CNN
-	1    6100 3200
+P 6100 3450
+F 0 "J2" H 5994 3125 50  0000 C CNN
+F 1 "POWER_CONN" H 6200 3200 50  0000 C CNN
+F 2 "Connectors_Terminal_Blocks:TerminalBlock_Philmore_TB132_02x5mm_Straight" H 6100 3450 50  0001 C CNN
+F 3 "~" H 6100 3450 50  0001 C CNN
+	1    6100 3450
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -220,71 +220,71 @@ $EndComp
 $Comp
 L power:+12V #PWR0104
 U 1 1 5C2FAA66
-P 6400 2850
-F 0 "#PWR0104" H 6400 2700 50  0001 C CNN
-F 1 "+12V" H 6415 3023 50  0000 C CNN
-F 2 "" H 6400 2850 50  0001 C CNN
-F 3 "" H 6400 2850 50  0001 C CNN
-	1    6400 2850
+P 6400 3100
+F 0 "#PWR0104" H 6400 2950 50  0001 C CNN
+F 1 "+12V" H 6415 3273 50  0000 C CNN
+F 2 "" H 6400 3100 50  0001 C CNN
+F 3 "" H 6400 3100 50  0001 C CNN
+	1    6400 3100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6400 3100 6400 2850
+	6400 3350 6400 3100
 Wire Wire Line
-	6750 3200 6750 3600
+	6750 3450 6750 3850
 Wire Wire Line
-	6750 3600 6900 3600
+	6750 3850 6900 3850
 Wire Wire Line
-	7300 3600 7300 3400
+	7300 3850 7300 3650
 $Comp
 L power:GND #PWR0105
 U 1 1 5C2FB4D5
-P 7300 3600
-F 0 "#PWR0105" H 7300 3350 50  0001 C CNN
-F 1 "GND" H 7305 3427 50  0000 C CNN
-F 2 "" H 7300 3600 50  0001 C CNN
-F 3 "" H 7300 3600 50  0001 C CNN
-	1    7300 3600
+P 7300 3850
+F 0 "#PWR0105" H 7300 3600 50  0001 C CNN
+F 1 "GND" H 7305 3677 50  0000 C CNN
+F 2 "" H 7300 3850 50  0001 C CNN
+F 3 "" H 7300 3850 50  0001 C CNN
+	1    7300 3850
 	1    0    0    -1  
 $EndComp
-Connection ~ 7300 3600
+Connection ~ 7300 3850
 Wire Wire Line
 	4700 2650 4700 2500
 Connection ~ 4700 2650
 Text Label 4700 2500 0    50   ~ 0
 5V
 Wire Wire Line
-	6900 3250 6900 3100
+	6900 3500 6900 3350
 Wire Wire Line
-	6900 3100 7000 3100
+	6900 3350 7000 3350
 Wire Wire Line
-	6900 3450 6900 3600
-Connection ~ 6900 3600
+	6900 3700 6900 3850
+Connection ~ 6900 3850
 Wire Wire Line
-	6900 3600 7300 3600
+	6900 3850 7300 3850
 Wire Wire Line
-	7600 3100 7750 3100
+	7600 3350 7750 3350
 Wire Wire Line
-	7300 3600 7750 3600
+	7300 3850 7750 3850
 Wire Wire Line
-	7750 3600 7750 3450
+	7750 3850 7750 3700
 $Comp
 L Device:C_Small C3
 U 1 1 5C2FC91D
-P 7750 3350
-F 0 "C3" H 7842 3396 50  0000 L CNN
-F 1 "0.1u" H 7842 3305 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7750 3350 50  0001 C CNN
-F 3 "~" H 7750 3350 50  0001 C CNN
-	1    7750 3350
+P 7750 3600
+F 0 "C3" H 7842 3646 50  0000 L CNN
+F 1 "0.1u" H 7842 3555 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7750 3600 50  0001 C CNN
+F 3 "~" H 7750 3600 50  0001 C CNN
+	1    7750 3600
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	7750 3100 7750 3250
-Connection ~ 7750 3100
+	7750 3350 7750 3500
+Connection ~ 7750 3350
 Wire Wire Line
-	7750 3100 8100 3100
-Text Label 8100 3100 0    50   ~ 0
+	7750 3350 8100 3350
+Text Label 8100 3350 0    50   ~ 0
 5V
 $Comp
 L Device:C_Small C1
@@ -454,8 +454,8 @@ T3
 Text Label 2250 4300 0    50   ~ 0
 T4
 Wire Wire Line
-	6500 3100 6500 2950
-Text Label 6500 2950 0    50   ~ 0
+	6500 3350 6500 3200
+Text Label 6500 3200 0    50   ~ 0
 12V
 $Comp
 L Device:R R2
@@ -2676,75 +2676,75 @@ Wire Wire Line
 $Comp
 L Device:R R4
 U 1 1 5C38FDFF
-P 2950 1250
-F 0 "R4" V 2750 1250 50  0000 L CNN
-F 1 "220" V 2850 1200 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 2880 1250 50  0001 C CNN
-F 3 "~" H 2950 1250 50  0001 C CNN
-	1    2950 1250
+P 2600 1250
+F 0 "R4" V 2400 1250 50  0000 L CNN
+F 1 "220" V 2500 1200 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 2530 1250 50  0001 C CNN
+F 3 "~" H 2600 1250 50  0001 C CNN
+	1    2600 1250
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R5
 U 1 1 5C390429
-P 2950 1450
-F 0 "R5" V 3150 1450 50  0000 L CNN
-F 1 "10k" V 3050 1400 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 2880 1450 50  0001 C CNN
-F 3 "~" H 2950 1450 50  0001 C CNN
-	1    2950 1450
+P 2600 1450
+F 0 "R5" V 2800 1450 50  0000 L CNN
+F 1 "10k" V 2700 1400 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 2530 1450 50  0001 C CNN
+F 3 "~" H 2600 1450 50  0001 C CNN
+	1    2600 1450
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3100 1450 3400 1450
+	2750 1450 3050 1450
 Wire Wire Line
-	3400 1450 3400 1350
+	3050 1450 3050 1350
 Wire Wire Line
-	3400 1450 3400 1500
-Connection ~ 3400 1450
+	3050 1450 3050 1500
+Connection ~ 3050 1450
 $Comp
 L power:GND #PWR0108
 U 1 1 5C39621E
-P 3400 1500
-F 0 "#PWR0108" H 3400 1250 50  0001 C CNN
-F 1 "GND" H 3405 1327 50  0000 C CNN
-F 2 "" H 3400 1500 50  0001 C CNN
-F 3 "" H 3400 1500 50  0001 C CNN
-	1    3400 1500
+P 3050 1500
+F 0 "#PWR0108" H 3050 1250 50  0001 C CNN
+F 1 "GND" H 3055 1327 50  0000 C CNN
+F 2 "" H 3050 1500 50  0001 C CNN
+F 3 "" H 3050 1500 50  0001 C CNN
+	1    3050 1500
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2800 1450 2750 1450
+	2450 1450 2400 1450
 Wire Wire Line
-	2750 1450 2750 1250
+	2400 1450 2400 1250
 Wire Wire Line
-	2750 1250 2800 1250
+	2400 1250 2450 1250
 Wire Wire Line
-	2750 1250 2650 1250
-Connection ~ 2750 1250
+	2400 1250 2300 1250
+Connection ~ 2400 1250
 Wire Wire Line
-	3400 950  3600 950 
-Text Label 3600 950  0    50   ~ 0
+	3050 950  3250 950 
+Text Label 3250 950  0    50   ~ 0
 GI_OUT_0
 $Comp
 L Device:R R3
 U 1 1 5C3A0141
-P 2950 950
-F 0 "R3" V 2750 950 50  0000 L CNN
-F 1 "10k" V 2850 900 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 2880 950 50  0001 C CNN
-F 3 "~" H 2950 950 50  0001 C CNN
-	1    2950 950 
+P 2600 950
+F 0 "R3" V 2400 950 50  0000 L CNN
+F 1 "10k" V 2500 900 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 2530 950 50  0001 C CNN
+F 3 "~" H 2600 950 50  0001 C CNN
+	1    2600 950 
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	3100 950  3400 950 
-Connection ~ 3400 950 
+	2750 950  3050 950 
+Connection ~ 3050 950 
 Wire Wire Line
-	2800 950  2750 950 
-Text Label 2750 950  2    50   ~ 0
+	2450 950  2400 950 
+Text Label 2400 950  2    50   ~ 0
 12V
-Text Label 2650 1250 2    50   ~ 0
+Text Label 2300 1250 2    50   ~ 0
 P0
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q2
@@ -2842,95 +2842,95 @@ P1
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q3
 U 1 1 5C3B2357
-P 5000 1150
-F 0 "Q3" H 5107 1203 60  0000 L CNN
-F 1 "FQP30N06L" H 5107 1097 60  0000 L CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 5200 1350 60  0001 L CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 5200 1450 60  0001 L CNN
-F 4 "FQP30N06L-ND" H 5200 1550 60  0001 L CNN "Digi-Key_PN"
-F 5 "FQP30N06L" H 5200 1650 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 5200 1750 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 5200 1850 60  0001 L CNN "Family"
-F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 5200 1950 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 5200 2050 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET N-CH 60V 32A TO-220" H 5200 2150 60  0001 L CNN "Description"
-F 11 "ON Semiconductor" H 5200 2250 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 5200 2350 60  0001 L CNN "Status"
-	1    5000 1150
+P 4550 1150
+F 0 "Q3" H 4657 1203 60  0000 L CNN
+F 1 "FQP30N06L" H 4657 1097 60  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 4750 1350 60  0001 L CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 4750 1450 60  0001 L CNN
+F 4 "FQP30N06L-ND" H 4750 1550 60  0001 L CNN "Digi-Key_PN"
+F 5 "FQP30N06L" H 4750 1650 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 4750 1750 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 4750 1850 60  0001 L CNN "Family"
+F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 4750 1950 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 4750 2050 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET N-CH 60V 32A TO-220" H 4750 2150 60  0001 L CNN "Description"
+F 11 "ON Semiconductor" H 4750 2250 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 4750 2350 60  0001 L CNN "Status"
+	1    4550 1150
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R10
 U 1 1 5C3B235D
-P 4550 1250
-F 0 "R10" V 4350 1250 50  0000 L CNN
-F 1 "220" V 4450 1200 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 4480 1250 50  0001 C CNN
-F 3 "~" H 4550 1250 50  0001 C CNN
-	1    4550 1250
+P 4100 1250
+F 0 "R10" V 3900 1250 50  0000 L CNN
+F 1 "220" V 4000 1200 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4030 1250 50  0001 C CNN
+F 3 "~" H 4100 1250 50  0001 C CNN
+	1    4100 1250
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:R R11
 U 1 1 5C3B2363
-P 4550 1450
-F 0 "R11" V 4750 1450 50  0000 L CNN
-F 1 "10k" V 4650 1400 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 4480 1450 50  0001 C CNN
-F 3 "~" H 4550 1450 50  0001 C CNN
-	1    4550 1450
+P 4100 1450
+F 0 "R11" V 4300 1450 50  0000 L CNN
+F 1 "10k" V 4200 1400 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4030 1450 50  0001 C CNN
+F 3 "~" H 4100 1450 50  0001 C CNN
+	1    4100 1450
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	4700 1450 5000 1450
+	4250 1450 4550 1450
 Wire Wire Line
-	5000 1450 5000 1350
+	4550 1450 4550 1350
 Wire Wire Line
-	5000 1450 5000 1500
-Connection ~ 5000 1450
+	4550 1450 4550 1500
+Connection ~ 4550 1450
 $Comp
 L power:GND #PWR0110
 U 1 1 5C3B236D
-P 5000 1500
-F 0 "#PWR0110" H 5000 1250 50  0001 C CNN
-F 1 "GND" H 5005 1327 50  0000 C CNN
-F 2 "" H 5000 1500 50  0001 C CNN
-F 3 "" H 5000 1500 50  0001 C CNN
-	1    5000 1500
+P 4550 1500
+F 0 "#PWR0110" H 4550 1250 50  0001 C CNN
+F 1 "GND" H 4555 1327 50  0000 C CNN
+F 2 "" H 4550 1500 50  0001 C CNN
+F 3 "" H 4550 1500 50  0001 C CNN
+	1    4550 1500
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4400 1450 4350 1450
+	3950 1450 3900 1450
 Wire Wire Line
-	4350 1450 4350 1250
+	3900 1450 3900 1250
 Wire Wire Line
-	4350 1250 4400 1250
+	3900 1250 3950 1250
 Wire Wire Line
-	4350 1250 4250 1250
-Connection ~ 4350 1250
+	3900 1250 3800 1250
+Connection ~ 3900 1250
 Wire Wire Line
-	5000 950  5200 950 
-Text Label 5200 950  0    50   ~ 0
+	4550 950  4750 950 
+Text Label 4750 950  0    50   ~ 0
 GI_OUT_2
 $Comp
 L Device:R R9
 U 1 1 5C3B237A
-P 4550 950
-F 0 "R9" V 4350 950 50  0000 L CNN
-F 1 "10k" V 4450 900 50  0000 L CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 4480 950 50  0001 C CNN
-F 3 "~" H 4550 950 50  0001 C CNN
-	1    4550 950 
+P 4100 950
+F 0 "R9" V 3900 950 50  0000 L CNN
+F 1 "10k" V 4000 900 50  0000 L CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4030 950 50  0001 C CNN
+F 3 "~" H 4100 950 50  0001 C CNN
+	1    4100 950 
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	4700 950  5000 950 
-Connection ~ 5000 950 
+	4250 950  4550 950 
+Connection ~ 4550 950 
 Wire Wire Line
-	4400 950  4350 950 
-Text Label 4350 950  2    50   ~ 0
+	3950 950  3900 950 
+Text Label 3900 950  2    50   ~ 0
 12V
-Text Label 4250 1250 2    50   ~ 0
+Text Label 3800 1250 2    50   ~ 0
 P2
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q4
@@ -3123,16 +3123,16 @@ Wire Wire Line
 $Comp
 L Device:D D6
 U 1 1 5C3DDC36
-P 6750 3100
-F 0 "D6" H 6750 2884 50  0000 C CNN
-F 1 "D" H 6750 2975 50  0000 C CNN
-F 2 "Diodes_THT:D_5W_P10.16mm_Horizontal" H 6750 3100 50  0001 C CNN
-F 3 "~" H 6750 3100 50  0001 C CNN
-	1    6750 3100
+P 6750 3350
+F 0 "D6" H 6750 3134 50  0000 C CNN
+F 1 "D" H 6750 3225 50  0000 C CNN
+F 2 "Diodes_THT:D_5W_P10.16mm_Horizontal" H 6750 3350 50  0001 C CNN
+F 3 "~" H 6750 3350 50  0001 C CNN
+	1    6750 3350
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	6300 3200 6750 3200
+	6300 3450 6750 3450
 $Comp
 L Device:R R24
 U 1 1 5C3EC8E7
@@ -3180,12 +3180,12 @@ Text Label 5250 3200 0    50   ~ 0
 $Comp
 L Device:C_Small C2
 U 1 1 5C4091D9
-P 6900 3350
-F 0 "C2" H 6992 3396 50  0000 L CNN
-F 1 "0.33u" H 6992 3305 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 6900 3350 50  0001 C CNN
-F 3 "~" H 6900 3350 50  0001 C CNN
-	1    6900 3350
+P 6900 3600
+F 0 "C2" H 6992 3646 50  0000 L CNN
+F 1 "0.33u" H 6992 3555 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 6900 3600 50  0001 C CNN
+F 3 "~" H 6900 3600 50  0001 C CNN
+	1    6900 3600
 	1    0    0    -1  
 $EndComp
 Text Label 1250 1150 2    50   ~ 0
@@ -3217,367 +3217,367 @@ PIN1
 Text Label 1750 1050 0    50   ~ 0
 PIN33
 Wire Wire Line
-	6300 3100 6400 3100
-Connection ~ 6400 3100
+	6300 3350 6400 3350
+Connection ~ 6400 3350
 Wire Wire Line
-	6400 3100 6500 3100
-Connection ~ 6500 3100
-Connection ~ 6900 3100
+	6400 3350 6500 3350
+Connection ~ 6500 3350
+Connection ~ 6900 3350
 Wire Wire Line
-	6500 3100 6600 3100
+	6500 3350 6600 3350
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q7
 U 1 1 5E273D24
-P 7300 2300
-F 0 "Q7" H 7408 2353 60  0000 L CNN
-F 1 "FQP30N06L" H 7408 2247 60  0000 L CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 7500 2500 60  0001 L CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 7500 2600 60  0001 L CNN
-F 4 "FQP30N06L-ND" H 7500 2700 60  0001 L CNN "Digi-Key_PN"
-F 5 "FQP30N06L" H 7500 2800 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 7500 2900 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 7500 3000 60  0001 L CNN "Family"
-F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 7500 3100 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 7500 3200 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET N-CH 60V 32A TO-220" H 7500 3300 60  0001 L CNN "Description"
-F 11 "ON Semiconductor" H 7500 3400 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 7500 3500 60  0001 L CNN "Status"
-	1    7300 2300
+P 6700 2300
+F 0 "Q7" H 6808 2353 60  0000 L CNN
+F 1 "FQP30N06L" H 6808 2247 60  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 6900 2500 60  0001 L CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 6900 2600 60  0001 L CNN
+F 4 "FQP30N06L-ND" H 6900 2700 60  0001 L CNN "Digi-Key_PN"
+F 5 "FQP30N06L" H 6900 2800 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 6900 2900 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 6900 3000 60  0001 L CNN "Family"
+F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 6900 3100 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 6900 3200 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET N-CH 60V 32A TO-220" H 6900 3300 60  0001 L CNN "Description"
+F 11 "ON Semiconductor" H 6900 3400 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 6900 3500 60  0001 L CNN "Status"
+	1    6700 2300
 	1    0    0    -1  
 $EndComp
 $Comp
 L caponian:LT4320_CAP U3
 U 1 1 5E28C278
-P 8200 1300
-F 0 "U3" H 8200 1415 50  0000 C CNN
-F 1 "LT4320_CAP" H 8200 1324 50  0000 C CNN
-F 2 "Housings_DIP:DIP-8_W7.62mm_LongPads" H 8200 1300 50  0001 C CNN
-F 3 "" H 8200 1300 50  0001 C CNN
-	1    8200 1300
+P 7600 1300
+F 0 "U3" H 7600 1415 50  0000 C CNN
+F 1 "LT4320_CAP" H 7600 1324 50  0000 C CNN
+F 2 "Housings_DIP:DIP-8_W7.62mm_LongPads" H 7600 1300 50  0001 C CNN
+F 3 "" H 7600 1300 50  0001 C CNN
+	1    7600 1300
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:Conn_01x12_Male J6
 U 1 1 5E292827
-P 5900 1300
-F 0 "J6" H 6008 1981 50  0000 C CNN
-F 1 "Conn_01x12_Male" H 6008 1890 50  0000 C CNN
-F 2 "Connectors_Molex:Molex_KK-41791-12_10x3.96mm_Straight" H 5900 1300 50  0001 C CNN
-F 3 "~" H 5900 1300 50  0001 C CNN
-	1    5900 1300
+P 5300 1300
+F 0 "J6" H 5408 1981 50  0000 C CNN
+F 1 "Conn_01x12_Male" H 5408 1890 50  0000 C CNN
+F 2 "Connectors_Molex:Molex_KK-41791-12_10x3.96mm_Straight" H 5300 1300 50  0001 C CNN
+F 3 "~" H 5300 1300 50  0001 C CNN
+	1    5300 1300
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6100 900  6250 900 
+	5500 900  5650 900 
 Wire Wire Line
-	6250 900  6250 1000
+	5650 900  5650 1000
 Wire Wire Line
-	6250 1300 6100 1300
+	5650 1300 5500 1300
 Wire Wire Line
-	6100 1200 6250 1200
-Connection ~ 6250 1200
+	5500 1200 5650 1200
+Connection ~ 5650 1200
 Wire Wire Line
-	6250 1200 6250 1300
+	5650 1200 5650 1300
 Wire Wire Line
-	6100 1100 6250 1100
-Connection ~ 6250 1100
+	5500 1100 5650 1100
+Connection ~ 5650 1100
 Wire Wire Line
-	6250 1100 6250 1200
+	5650 1100 5650 1200
 Wire Wire Line
-	6100 1000 6250 1000
-Connection ~ 6250 1000
+	5500 1000 5650 1000
+Connection ~ 5650 1000
 Wire Wire Line
-	6250 1000 6250 1100
-NoConn ~ 6100 800 
-NoConn ~ 6100 1600
+	5650 1000 5650 1100
+NoConn ~ 5500 800 
+NoConn ~ 5500 1600
 Wire Wire Line
-	6100 1400 6250 1400
+	5500 1400 5650 1400
 Wire Wire Line
-	6250 1400 6250 1450
+	5650 1400 5650 1450
 Wire Wire Line
-	6250 1500 6100 1500
+	5650 1500 5500 1500
 Wire Wire Line
-	6250 1500 6250 1700
+	5650 1500 5650 1700
 Wire Wire Line
-	6250 1700 6100 1700
-Connection ~ 6250 1500
+	5650 1700 5500 1700
+Connection ~ 5650 1500
 Wire Wire Line
-	6100 1800 6250 1800
+	5500 1800 5650 1800
 Wire Wire Line
-	6250 1800 6250 1700
-Connection ~ 6250 1700
+	5650 1800 5650 1700
+Connection ~ 5650 1700
 Wire Wire Line
-	6250 1900 6250 1800
-Connection ~ 6250 1800
+	5650 1900 5650 1800
+Connection ~ 5650 1800
 Wire Wire Line
-	6100 1900 6250 1900
+	5500 1900 5650 1900
 $Comp
 L Device:CP C5
 U 1 1 5E304F4D
-P 10050 1200
-F 0 "C5" H 10168 1246 50  0000 L CNN
-F 1 "CP" H 10168 1155 50  0000 L CNN
-F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 10088 1050 50  0001 C CNN
-F 3 "~" H 10050 1200 50  0001 C CNN
-	1    10050 1200
+P 9450 1200
+F 0 "C5" H 9568 1246 50  0000 L CNN
+F 1 "CP" H 9568 1155 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 9488 1050 50  0001 C CNN
+F 3 "~" H 9450 1200 50  0001 C CNN
+	1    9450 1200
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:CP C6
 U 1 1 5E30562B
-P 10450 1200
-F 0 "C6" H 10568 1246 50  0000 L CNN
-F 1 "CP" H 10568 1155 50  0000 L CNN
-F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 10488 1050 50  0001 C CNN
-F 3 "~" H 10450 1200 50  0001 C CNN
-	1    10450 1200
+P 9850 1200
+F 0 "C6" H 9968 1246 50  0000 L CNN
+F 1 "CP" H 9968 1155 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 9888 1050 50  0001 C CNN
+F 3 "~" H 9850 1200 50  0001 C CNN
+	1    9850 1200
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:CP C7
 U 1 1 5E305EDF
-P 10850 1200
-F 0 "C7" H 10968 1246 50  0000 L CNN
-F 1 "CP" H 10968 1155 50  0000 L CNN
-F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 10888 1050 50  0001 C CNN
-F 3 "~" H 10850 1200 50  0001 C CNN
-	1    10850 1200
+P 10250 1200
+F 0 "C7" H 10368 1246 50  0000 L CNN
+F 1 "CP" H 10368 1155 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 10288 1050 50  0001 C CNN
+F 3 "~" H 10250 1200 50  0001 C CNN
+	1    10250 1200
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:CP C8
 U 1 1 5E30639F
-P 11200 1200
-F 0 "C8" H 11318 1246 50  0000 L CNN
-F 1 "CP" H 11318 1155 50  0000 L CNN
-F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 11238 1050 50  0001 C CNN
-F 3 "~" H 11200 1200 50  0001 C CNN
-	1    11200 1200
+P 10600 1200
+F 0 "C8" H 10718 1246 50  0000 L CNN
+F 1 "CP" H 10718 1155 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D18.0mm_P7.50mm" H 10638 1050 50  0001 C CNN
+F 3 "~" H 10600 1200 50  0001 C CNN
+	1    10600 1200
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:C C4
 U 1 1 5E3158BA
-P 9700 1200
-F 0 "C4" H 9815 1246 50  0000 L CNN
-F 1 "C" H 9815 1155 50  0000 L CNN
-F 2 "Capacitors_THT:C_Rect_L7.0mm_W3.5mm_P5.00mm" H 9738 1050 50  0001 C CNN
-F 3 "~" H 9700 1200 50  0001 C CNN
-	1    9700 1200
+P 9100 1200
+F 0 "C4" H 9215 1246 50  0000 L CNN
+F 1 "C" H 9215 1155 50  0000 L CNN
+F 2 "Capacitors_THT:C_Rect_L7.0mm_W3.5mm_P5.00mm" H 9138 1050 50  0001 C CNN
+F 3 "~" H 9100 1200 50  0001 C CNN
+	1    9100 1200
 	1    0    0    -1  
 $EndComp
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q9
 U 1 1 5E3240D9
-P 9150 2300
-F 0 "Q9" H 9258 2353 60  0000 L CNN
-F 1 "FQP30N06L" H 9258 2247 60  0000 L CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 9350 2500 60  0001 L CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 9350 2600 60  0001 L CNN
-F 4 "FQP30N06L-ND" H 9350 2700 60  0001 L CNN "Digi-Key_PN"
-F 5 "FQP30N06L" H 9350 2800 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 9350 2900 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 9350 3000 60  0001 L CNN "Family"
-F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 9350 3100 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 9350 3200 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET N-CH 60V 32A TO-220" H 9350 3300 60  0001 L CNN "Description"
-F 11 "ON Semiconductor" H 9350 3400 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 9350 3500 60  0001 L CNN "Status"
-	1    9150 2300
+P 8550 2300
+F 0 "Q9" H 8658 2353 60  0000 L CNN
+F 1 "FQP30N06L" H 8658 2247 60  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 8750 2500 60  0001 L CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 8750 2600 60  0001 L CNN
+F 4 "FQP30N06L-ND" H 8750 2700 60  0001 L CNN "Digi-Key_PN"
+F 5 "FQP30N06L" H 8750 2800 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 8750 2900 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 8750 3000 60  0001 L CNN "Family"
+F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 8750 3100 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 8750 3200 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET N-CH 60V 32A TO-220" H 8750 3300 60  0001 L CNN "Description"
+F 11 "ON Semiconductor" H 8750 3400 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 8750 3500 60  0001 L CNN "Status"
+	1    8550 2300
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	8800 1000 8800 1150
+	8200 1000 8200 1150
 Wire Wire Line
-	8800 1450 8700 1450
+	8200 1450 8100 1450
 Wire Wire Line
-	7700 1450 7300 1450
-Connection ~ 6250 1450
+	7100 1450 6700 1450
+Connection ~ 5650 1450
 Wire Wire Line
-	6250 1450 6250 1500
+	5650 1450 5650 1500
 Wire Wire Line
-	9150 2600 9150 2500
+	8550 2600 8550 2500
 Wire Wire Line
-	9150 2600 9700 2600
+	8550 2600 9100 2600
 Wire Wire Line
-	9700 2600 9700 1350
-Connection ~ 9150 2600
+	9100 2600 9100 1350
+Connection ~ 8550 2600
 Wire Wire Line
-	9700 1350 10050 1350
-Connection ~ 9700 1350
-Connection ~ 10050 1350
+	9100 1350 9450 1350
+Connection ~ 9100 1350
+Connection ~ 9450 1350
 Wire Wire Line
-	10050 1350 10450 1350
-Connection ~ 10450 1350
+	9450 1350 9850 1350
+Connection ~ 9850 1350
 Wire Wire Line
-	10450 1350 10850 1350
-Connection ~ 10850 1350
+	9850 1350 10250 1350
+Connection ~ 10250 1350
 Wire Wire Line
-	10850 1350 11200 1350
-Connection ~ 11200 1350
+	10250 1350 10600 1350
+Connection ~ 10600 1350
 Wire Wire Line
-	11200 1350 11700 1350
+	10600 1350 11100 1350
 $Comp
 L power:GND #PWR01
 U 1 1 5E3877F3
-P 11700 1350
-F 0 "#PWR01" H 11700 1100 50  0001 C CNN
-F 1 "GND" H 11705 1177 50  0000 C CNN
-F 2 "" H 11700 1350 50  0001 C CNN
-F 3 "" H 11700 1350 50  0001 C CNN
-	1    11700 1350
+P 11100 1350
+F 0 "#PWR01" H 11100 1100 50  0001 C CNN
+F 1 "GND" H 11105 1177 50  0000 C CNN
+F 2 "" H 11100 1350 50  0001 C CNN
+F 3 "" H 11100 1350 50  0001 C CNN
+	1    11100 1350
 	1    0    0    -1  
 $EndComp
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q8
 U 1 1 5E38829A
-P 9150 1450
-F 0 "Q8" H 9258 1503 60  0000 L CNN
-F 1 "FQP30N06L" H 9258 1397 60  0000 L CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 9350 1650 60  0001 L CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 9350 1750 60  0001 L CNN
-F 4 "FQP30N06L-ND" H 9350 1850 60  0001 L CNN "Digi-Key_PN"
-F 5 "FQP30N06L" H 9350 1950 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 9350 2050 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 9350 2150 60  0001 L CNN "Family"
-F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 9350 2250 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 9350 2350 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET N-CH 60V 32A TO-220" H 9350 2450 60  0001 L CNN "Description"
-F 11 "ON Semiconductor" H 9350 2550 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 9350 2650 60  0001 L CNN "Status"
-	1    9150 1450
+P 8550 1450
+F 0 "Q8" H 8658 1503 60  0000 L CNN
+F 1 "FQP30N06L" H 8658 1397 60  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 8750 1650 60  0001 L CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 8750 1750 60  0001 L CNN
+F 4 "FQP30N06L-ND" H 8750 1850 60  0001 L CNN "Digi-Key_PN"
+F 5 "FQP30N06L" H 8750 1950 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 8750 2050 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 8750 2150 60  0001 L CNN "Family"
+F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 8750 2250 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 8750 2350 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET N-CH 60V 32A TO-220" H 8750 2450 60  0001 L CNN "Description"
+F 11 "ON Semiconductor" H 8750 2550 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 8750 2650 60  0001 L CNN "Status"
+	1    8550 1450
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9150 1250 9150 1050
+	8550 1250 8550 1050
 Wire Wire Line
-	9150 1050 9500 1050
-Connection ~ 9700 1050
+	8550 1050 8900 1050
+Connection ~ 9100 1050
 Wire Wire Line
-	9700 1050 10050 1050
-Connection ~ 10050 1050
+	9100 1050 9450 1050
+Connection ~ 9450 1050
 Wire Wire Line
-	10050 1050 10450 1050
-Connection ~ 10450 1050
+	9450 1050 9850 1050
+Connection ~ 9850 1050
 Wire Wire Line
-	10450 1050 10850 1050
-Connection ~ 10850 1050
+	9850 1050 10250 1050
+Connection ~ 10250 1050
 Wire Wire Line
-	10850 1050 11200 1050
-Connection ~ 11200 1050
+	10250 1050 10600 1050
+Connection ~ 10600 1050
 Wire Wire Line
-	11200 1050 11700 1050
-Text Label 11700 1050 0    50   ~ 0
+	10600 1050 11100 1050
+Text Label 11100 1050 0    50   ~ 0
 OUT_DC
 Wire Wire Line
-	8700 1550 8850 1550
+	8100 1550 8250 1550
 Wire Wire Line
-	9150 1650 9400 1650
+	8550 1650 8800 1650
 Wire Wire Line
-	9400 1650 9400 1150
+	8800 1650 8800 1150
 Wire Wire Line
-	9400 1150 8800 1150
-Connection ~ 8800 1150
+	8800 1150 8200 1150
+Connection ~ 8200 1150
 Wire Wire Line
-	8800 1150 8800 1450
+	8200 1150 8200 1450
 Wire Wire Line
-	8700 1650 9000 1650
+	8100 1650 8400 1650
 Wire Wire Line
-	9000 1650 9000 1700
+	8400 1650 8400 1700
 Wire Wire Line
-	9000 1700 9500 1700
+	8400 1700 8900 1700
 Wire Wire Line
-	9500 1700 9500 1050
-Connection ~ 9500 1050
+	8900 1700 8900 1050
+Connection ~ 8900 1050
 Wire Wire Line
-	9500 1050 9700 1050
-Text Label 6900 2950 0    50   ~ 0
+	8900 1050 9100 1050
+Text Label 6900 3200 0    50   ~ 0
 OUT_DC
 $Comp
 L dk_Transistors-FETs-MOSFETs-Single:FQP30N06L Q6
 U 1 1 5E45B8C1
-P 6950 1800
-F 0 "Q6" H 7058 1853 60  0000 L CNN
-F 1 "FQP30N06L" H 7058 1747 60  0000 L CNN
-F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 7150 2000 60  0001 L CNN
-F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 7150 2100 60  0001 L CNN
-F 4 "FQP30N06L-ND" H 7150 2200 60  0001 L CNN "Digi-Key_PN"
-F 5 "FQP30N06L" H 7150 2300 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 7150 2400 60  0001 L CNN "Category"
-F 7 "Transistors - FETs, MOSFETs - Single" H 7150 2500 60  0001 L CNN "Family"
-F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 7150 2600 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 7150 2700 60  0001 L CNN "DK_Detail_Page"
-F 10 "MOSFET N-CH 60V 32A TO-220" H 7150 2800 60  0001 L CNN "Description"
-F 11 "ON Semiconductor" H 7150 2900 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 7150 3000 60  0001 L CNN "Status"
-	1    6950 1800
+P 6350 1800
+F 0 "Q6" H 6458 1853 60  0000 L CNN
+F 1 "FQP30N06L" H 6458 1747 60  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 6550 2000 60  0001 L CNN
+F 3 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 6550 2100 60  0001 L CNN
+F 4 "FQP30N06L-ND" H 6550 2200 60  0001 L CNN "Digi-Key_PN"
+F 5 "FQP30N06L" H 6550 2300 60  0001 L CNN "MPN"
+F 6 "Discrete Semiconductor Products" H 6550 2400 60  0001 L CNN "Category"
+F 7 "Transistors - FETs, MOSFETs - Single" H 6550 2500 60  0001 L CNN "Family"
+F 8 "https://www.fairchildsemi.com/datasheets/FQ/FQP30N06L.pdf" H 6550 2600 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/on-semiconductor/FQP30N06L/FQP30N06L-ND/1055122" H 6550 2700 60  0001 L CNN "DK_Detail_Page"
+F 10 "MOSFET N-CH 60V 32A TO-220" H 6550 2800 60  0001 L CNN "Description"
+F 11 "ON Semiconductor" H 6550 2900 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 6550 3000 60  0001 L CNN "Status"
+	1    6350 1800
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9150 1050 6950 1050
+	8550 1050 6350 1050
 Wire Wire Line
-	6950 1050 6950 1600
-Connection ~ 9150 1050
+	6350 1050 6350 1600
+Connection ~ 8550 1050
 Wire Wire Line
-	6650 1550 6650 1900
+	6050 1550 6050 1900
 Wire Wire Line
-	6950 2000 7300 2000
+	6350 2000 6700 2000
 Wire Wire Line
-	7300 2000 7300 1450
-Connection ~ 7300 1450
+	6700 2000 6700 1450
+Connection ~ 6700 1450
 Wire Wire Line
-	7300 1450 6250 1450
+	6700 1450 5650 1450
 Wire Wire Line
-	6650 1550 7700 1550
+	6050 1550 7100 1550
 Wire Wire Line
-	7300 2600 7300 2500
+	6700 2600 6700 2500
 Wire Wire Line
-	7300 2600 8700 2600
+	6700 2600 8100 2600
 Wire Wire Line
-	7300 2100 7300 2000
-Connection ~ 7300 2000
+	6700 2100 6700 2000
+Connection ~ 6700 2000
 Wire Wire Line
-	7000 2400 7000 2650
+	6400 2400 6400 2650
 Wire Wire Line
-	7000 2650 7700 2650
+	6400 2650 7100 2650
 Wire Wire Line
-	7700 2650 7700 1750
+	7100 2650 7100 1750
 Wire Wire Line
-	9400 1650 9400 2100
+	8800 1650 8800 2100
 Wire Wire Line
-	9400 2100 9150 2100
-Connection ~ 9400 1650
+	8800 2100 8550 2100
+Connection ~ 8800 1650
 Wire Wire Line
-	7700 1650 7600 1650
+	7100 1650 7000 1650
 Wire Wire Line
-	7600 1650 7600 2100
+	7000 1650 7000 2100
 Wire Wire Line
-	7600 2100 8850 2100
+	7000 2100 8250 2100
 Wire Wire Line
-	8850 2100 8850 2400
+	8250 2100 8250 2400
 Wire Wire Line
-	8700 1750 8700 2600
-Connection ~ 8700 2600
+	8100 1750 8100 2600
+Connection ~ 8100 2600
 Wire Wire Line
-	8700 2600 9150 2600
+	8100 2600 8550 2600
 $Comp
 L Device:Fuse F6
 U 1 1 5E51B3CE
-P 6600 1000
-F 0 "F6" V 6403 1000 50  0000 C CNN
-F 1 "Fuse" V 6494 1000 50  0000 C CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 6530 1000 50  0001 C CNN
-F 3 "~" H 6600 1000 50  0001 C CNN
-	1    6600 1000
+P 6000 1000
+F 0 "F6" V 5803 1000 50  0000 C CNN
+F 1 "Fuse" V 5894 1000 50  0000 C CNN
+F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 5930 1000 50  0001 C CNN
+F 3 "~" H 6000 1000 50  0001 C CNN
+	1    6000 1000
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	6250 1000 6450 1000
+	5650 1000 5850 1000
 Wire Wire Line
-	6750 1000 8800 1000
+	6150 1000 8200 1000
 Wire Wire Line
-	6600 3100 6600 2950
+	6600 3350 6600 3200
 Wire Wire Line
-	6600 2950 6900 2950
-Connection ~ 6600 3100
+	6600 3200 6900 3200
+Connection ~ 6600 3350
 $EndSCHEMATC
