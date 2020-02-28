@@ -1,8 +1,10 @@
-### Module positions - created on Fr 28 Feb 2020 09:52:19 ###
+### Module positions - created on Fr 28 Feb 2020 16:50:31 ###
 ### Printed by Pcbnew version kicad 5.1.5
 ## Unit = mm, Angle = deg.
 ## Side : bottom
 # Ref     Val       Package                               PosX       PosY       Rot  Side
+C1        C_Small   C_0805_HandSoldering              -74.7500   -34.5000  180.0000  bottom
+C2        0.33u     C_0805_HandSoldering              -65.2500   -38.7500    0.0000  bottom
 C3        0.1u      C_0805_HandSoldering              -74.7500   -38.0000    0.0000  bottom
 R1        10k       R_0805_HandSoldering              -97.1500   -30.5000  180.0000  bottom
 R2        1.5k      R_0805_HandSoldering             -110.6500   -81.5000  180.0000  bottom
@@ -26,7 +28,7 @@ R19       180       R_0805_HandSoldering             -111.3500   -91.0000    0.0
 R20       180       R_0805_HandSoldering             -111.3500   -95.0000    0.0000  bottom
 R21       220       R_0805_HandSoldering             -111.3500   -99.0000    0.0000  bottom
 R22       220       R_0805_HandSoldering             -111.3500  -103.0000    0.0000  bottom
-R23       1M        R_0805_HandSoldering              -72.0000   -42.3500  270.0000  bottom
-R24       300k      R_0805_HandSoldering              -75.0000   -42.3500   90.0000  bottom
+R23       1M        R_0805_HandSoldering              -62.2500   -46.2500    0.0000  bottom
+R24       300k      R_0805_HandSoldering              -79.6500   -38.0000  180.0000  bottom
 U1        74LS374   SOIC-20W_7.5x12.8mm_Pitch1.27mm   -97.2000   -38.7150  180.0000  bottom
 ## End

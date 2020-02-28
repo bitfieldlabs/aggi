@@ -1,10 +1,8 @@
-### Module positions - created on Fr 28 Feb 2020 09:52:19 ###
+### Module positions - created on Fr 28 Feb 2020 16:50:31 ###
 ### Printed by Pcbnew version kicad 5.1.5
 ## Unit = mm, Angle = deg.
 ## Side : top
 # Ref     Val       Package                      PosX       PosY       Rot  Side
-C1        C_Small   C_0805_HandSoldering      72.0000   -42.2500   90.0000  top
-C2        0.33u     C_0805_HandSoldering      75.0000   -42.2500  270.0000  top
 D1        LED       LED_0805_HandSoldering   111.3500   -87.0000    0.0000  top
 D2        LED       LED_0805_HandSoldering   111.3500   -91.0000    0.0000  top
 D3        LED       LED_0805_HandSoldering   111.3500   -95.0000    0.0000  top
