@@ -102,23 +102,23 @@ $EndComp
 $Comp
 L Connector:Conn_01x11_Male J3
 U 1 1 5C2F89CF
-P 8900 4400
-F 0 "J3" H 8873 4330 50  0000 R CNN
-F 1 "GI_WPC_J120" H 9500 5000 50  0000 R CNN
-F 2 "Connectors_Molex:Molex_KK-41791-11_10x3.96mm_Straight" H 8900 4400 50  0001 C CNN
-F 3 "~" H 8900 4400 50  0001 C CNN
-	1    8900 4400
+P 9250 4250
+F 0 "J3" H 9223 4180 50  0000 R CNN
+F 1 "GI_WPC_J120" H 9850 4850 50  0000 R CNN
+F 2 "Connectors_Molex:Molex_KK-41791-11_10x3.96mm_Straight" H 9250 4250 50  0001 C CNN
+F 3 "~" H 9250 4250 50  0001 C CNN
+	1    9250 4250
 	-1   0    0    1   
 $EndComp
 $Comp
 L Connector:Conn_01x11_Male J4
 U 1 1 5C2F8A6B
-P 9650 4400
-F 0 "J4" H 9623 4330 50  0000 R CNN
-F 1 "GI_WPC_J121" H 10000 5000 50  0000 R CNN
-F 2 "Connectors_Molex:Molex_KK-41791-11_10x3.96mm_Straight" H 9650 4400 50  0001 C CNN
-F 3 "~" H 9650 4400 50  0001 C CNN
-	1    9650 4400
+P 10000 4250
+F 0 "J4" H 9973 4180 50  0000 R CNN
+F 1 "GI_WPC_J121" H 10350 4850 50  0000 R CNN
+F 2 "Connectors_Molex:Molex_KK-41791-11_10x3.96mm_Straight" H 10000 4250 50  0001 C CNN
+F 3 "~" H 10000 4250 50  0001 C CNN
+	1    10000 4250
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -146,12 +146,12 @@ $EndComp
 $Comp
 L Device:Fuse F1
 U 1 1 5C2F922F
-P 8450 3900
-F 0 "F1" V 8253 3900 50  0000 C CNN
-F 1 "Fuse" V 8344 3900 50  0000 C CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8380 3900 50  0001 C CNN
-F 3 "~" H 8450 3900 50  0001 C CNN
-	1    8450 3900
+P 8800 3750
+F 0 "F1" V 8603 3750 50  0000 C CNN
+F 1 "Fuse" V 8694 3750 50  0000 C CNN
+F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8730 3750 50  0001 C CNN
+F 3 "~" H 8800 3750 50  0001 C CNN
+	1    8800 3750
 	0    1    1    0   
 $EndComp
 $Comp
@@ -272,8 +272,8 @@ $Comp
 L Device:C_Small C3
 U 1 1 5C2FC91D
 P 7750 3600
-F 0 "C3" H 7842 3646 50  0000 L CNN
-F 1 "0.1u" H 7842 3555 50  0000 L CNN
+F 0 "C3" H 7550 3700 50  0000 L CNN
+F 1 "0.1u" H 7500 3550 50  0000 L CNN
 F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7750 3600 50  0001 C CNN
 F 3 "~" H 7750 3600 50  0001 C CNN
 	1    7750 3600
@@ -283,7 +283,7 @@ Wire Wire Line
 	7750 3350 7750 3500
 Connection ~ 7750 3350
 Wire Wire Line
-	7750 3350 8100 3350
+	7750 3350 7950 3350
 Text Label 8100 3350 0    50   ~ 0
 5V
 $Comp
@@ -324,12 +324,12 @@ Text Label 1750 3450 0    50   ~ 0
 $Comp
 L Connector:Conn_01x03_Male J5
 U 1 1 5C2FFDF1
-P 10500 4000
-F 0 "J5" H 10473 3930 50  0000 R CNN
-F 1 "GI_CONN_J119" H 10850 4200 50  0000 R CNN
-F 2 "Connectors_Molex:Molex_KK-41791-03_03x3.96mm_Straight" H 10500 4000 50  0001 C CNN
-F 3 "~" H 10500 4000 50  0001 C CNN
-	1    10500 4000
+P 10850 3850
+F 0 "J5" H 10823 3780 50  0000 R CNN
+F 1 "GI_CONN_J119" H 11200 4050 50  0000 R CNN
+F 2 "Connectors_Molex:Molex_KK-41791-03_03x3.96mm_Straight" H 10850 3850 50  0001 C CNN
+F 3 "~" H 10850 3850 50  0001 C CNN
+	1    10850 3850
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
@@ -500,8 +500,8 @@ P3
 Text Label 4000 3750 2    50   ~ 0
 P4
 NoConn ~ 4000 4450
-NoConn ~ 9450 4600
-NoConn ~ 8700 4600
+NoConn ~ 9800 4450
+NoConn ~ 9050 4450
 $Bitmap
 Pos 3050 6600
 Scale 1.200000
@@ -2367,173 +2367,173 @@ Text Notes 2700 5800 2    118  ~ 0
 WPC PPD TRIAC INPUT
 Text Notes 16600 1400 2    118  ~ 0
 WPC PPD GI OUTPUT
-NoConn ~ 10300 4000
+NoConn ~ 10650 3850
 $Comp
 L Device:Fuse F2
 U 1 1 5C35316F
-P 8450 4000
-F 0 "F2" V 8253 4000 50  0000 C CNN
-F 1 "Fuse" V 8344 4000 50  0000 C CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8380 4000 50  0001 C CNN
-F 3 "~" H 8450 4000 50  0001 C CNN
-	1    8450 4000
+P 8800 3850
+F 0 "F2" V 8603 3850 50  0000 C CNN
+F 1 "Fuse" V 8694 3850 50  0000 C CNN
+F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8730 3850 50  0001 C CNN
+F 3 "~" H 8800 3850 50  0001 C CNN
+	1    8800 3850
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:Fuse F3
 U 1 1 5C3531A3
-P 8450 4100
-F 0 "F3" V 8253 4100 50  0000 C CNN
-F 1 "Fuse" V 8344 4100 50  0000 C CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8380 4100 50  0001 C CNN
-F 3 "~" H 8450 4100 50  0001 C CNN
-	1    8450 4100
+P 8800 3950
+F 0 "F3" V 8603 3950 50  0000 C CNN
+F 1 "Fuse" V 8694 3950 50  0000 C CNN
+F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8730 3950 50  0001 C CNN
+F 3 "~" H 8800 3950 50  0001 C CNN
+	1    8800 3950
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:Fuse F4
 U 1 1 5C3531DD
-P 8450 4200
-F 0 "F4" V 8253 4200 50  0000 C CNN
-F 1 "Fuse" V 8344 4200 50  0000 C CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8380 4200 50  0001 C CNN
-F 3 "~" H 8450 4200 50  0001 C CNN
-	1    8450 4200
+P 8800 4050
+F 0 "F4" V 8603 4050 50  0000 C CNN
+F 1 "Fuse" V 8694 4050 50  0000 C CNN
+F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8730 4050 50  0001 C CNN
+F 3 "~" H 8800 4050 50  0001 C CNN
+	1    8800 4050
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:Fuse F5
 U 1 1 5C353215
-P 8450 4300
-F 0 "F5" V 8253 4300 50  0000 C CNN
-F 1 "Fuse" V 8344 4300 50  0000 C CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8380 4300 50  0001 C CNN
-F 3 "~" H 8450 4300 50  0001 C CNN
-	1    8450 4300
+P 8800 4150
+F 0 "F5" V 8603 4150 50  0000 C CNN
+F 1 "Fuse" V 8694 4150 50  0000 C CNN
+F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_lateral_Type-II" V 8730 4150 50  0001 C CNN
+F 3 "~" H 8800 4150 50  0001 C CNN
+	1    8800 4150
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	8600 3900 8650 3900
+	8950 3750 9000 3750
 Wire Wire Line
-	8600 4000 8650 4000
+	8950 3850 9000 3850
 Wire Wire Line
-	8700 4100 8650 4100
+	9050 3950 9000 3950
 Wire Wire Line
-	8600 4200 8650 4200
+	8950 4050 9000 4050
 Wire Wire Line
-	8700 4300 8650 4300
+	9050 4150 9000 4150
 Wire Wire Line
-	8300 4300 8200 4300
+	8650 4150 8550 4150
 Wire Wire Line
-	8200 4300 8200 4200
+	8550 4150 8550 4050
 Wire Wire Line
-	8300 3900 8200 3900
-Connection ~ 8200 3900
+	8650 3750 8550 3750
+Connection ~ 8550 3750
 Wire Wire Line
-	8200 3900 8200 3750
+	8550 3750 8550 3600
 Wire Wire Line
-	8200 4000 8300 4000
-Connection ~ 8200 4000
+	8550 3850 8650 3850
+Connection ~ 8550 3850
 Wire Wire Line
-	8200 4000 8200 3900
+	8550 3850 8550 3750
 Wire Wire Line
-	8300 4100 8200 4100
-Connection ~ 8200 4100
+	8650 3950 8550 3950
+Connection ~ 8550 3950
 Wire Wire Line
-	8200 4100 8200 4000
+	8550 3950 8550 3850
 Wire Wire Line
-	8200 4200 8300 4200
-Connection ~ 8200 4200
+	8550 4050 8650 4050
+Connection ~ 8550 4050
 Wire Wire Line
-	8200 4200 8200 4100
-Text Label 8200 3750 0    50   ~ 0
+	8550 4050 8550 3950
+Text Label 8550 3600 0    50   ~ 0
 12V
-Text Label 8700 4900 2    50   ~ 0
+Text Label 9050 4750 2    50   ~ 0
 GI_OUT_0
-Text Label 8700 4800 2    50   ~ 0
+Text Label 9050 4650 2    50   ~ 0
 GI_OUT_1
-Text Label 8700 4700 2    50   ~ 0
+Text Label 9050 4550 2    50   ~ 0
 GI_OUT_2
-Text Label 8700 4500 2    50   ~ 0
+Text Label 9050 4350 2    50   ~ 0
 GI_OUT_3
-Text Label 8700 4400 2    50   ~ 0
+Text Label 9050 4250 2    50   ~ 0
 GI_OUT_4
 Wire Wire Line
-	8650 3900 8650 3850
+	9000 3750 9000 3700
 Wire Wire Line
-	8650 3850 9350 3850
+	9000 3700 9700 3700
 Wire Wire Line
-	9350 3850 9350 3900
+	9700 3700 9700 3750
 Wire Wire Line
-	9350 3900 9400 3900
-Connection ~ 8650 3900
+	9700 3750 9750 3750
+Connection ~ 9000 3750
 Wire Wire Line
-	8650 3900 8700 3900
+	9000 3750 9050 3750
 Wire Wire Line
-	9450 4000 9300 4000
+	9800 3850 9650 3850
 Wire Wire Line
-	9300 4000 9300 3950
+	9650 3850 9650 3800
 Wire Wire Line
-	9300 3950 8650 3950
+	9650 3800 9000 3800
 Wire Wire Line
-	8650 3950 8650 4000
-Connection ~ 8650 4000
+	9000 3800 9000 3850
+Connection ~ 9000 3850
 Wire Wire Line
-	8650 4000 8700 4000
+	9000 3850 9050 3850
 Wire Wire Line
-	8650 4100 8650 4050
+	9000 3950 9000 3900
 Wire Wire Line
-	8650 4050 9250 4050
+	9000 3900 9600 3900
 Wire Wire Line
-	9250 4050 9250 4100
+	9600 3900 9600 3950
 Wire Wire Line
-	9250 4100 9450 4100
-Connection ~ 8650 4100
+	9600 3950 9800 3950
+Connection ~ 9000 3950
 Wire Wire Line
-	8650 4100 8600 4100
+	9000 3950 8950 3950
 Wire Wire Line
-	9450 4200 9150 4200
+	9800 4050 9500 4050
 Wire Wire Line
-	9150 4200 9150 4150
+	9500 4050 9500 4000
 Wire Wire Line
-	9150 4150 8650 4150
+	9500 4000 9000 4000
 Wire Wire Line
-	8650 4150 8650 4200
-Connection ~ 8650 4200
+	9000 4000 9000 4050
+Connection ~ 9000 4050
 Wire Wire Line
-	8650 4200 8700 4200
+	9000 4050 9050 4050
 Wire Wire Line
-	8650 4300 8650 4250
+	9000 4150 9000 4100
 Wire Wire Line
-	8650 4250 9050 4250
+	9000 4100 9400 4100
 Wire Wire Line
-	9050 4250 9050 4300
+	9400 4100 9400 4150
 Wire Wire Line
-	9050 4300 9450 4300
-Connection ~ 8650 4300
+	9400 4150 9800 4150
+Connection ~ 9000 4150
 Wire Wire Line
-	8650 4300 8600 4300
-Text Label 9450 4400 2    50   ~ 0
+	9000 4150 8950 4150
+Text Label 9800 4250 2    50   ~ 0
 GI_OUT_4
-Text Label 9450 4500 2    50   ~ 0
+Text Label 9800 4350 2    50   ~ 0
 GI_OUT_3
-Text Label 9450 4700 2    50   ~ 0
+Text Label 9800 4550 2    50   ~ 0
 GI_OUT_2
-Text Label 9450 4800 2    50   ~ 0
+Text Label 9800 4650 2    50   ~ 0
 GI_OUT_1
-Text Label 9450 4900 2    50   ~ 0
+Text Label 9800 4750 2    50   ~ 0
 GI_OUT_0
-Text Label 10300 4100 2    50   ~ 0
+Text Label 10650 3950 2    50   ~ 0
 GI_OUT_4
 Wire Wire Line
-	9400 3900 9400 3750
+	9750 3750 9750 3600
 Wire Wire Line
-	9400 3750 10300 3750
+	9750 3600 10650 3600
 Wire Wire Line
-	10300 3750 10300 3900
-Connection ~ 9400 3900
+	10650 3600 10650 3750
+Connection ~ 9750 3750
 Wire Wire Line
-	9400 3900 9450 3900
+	9750 3750 9800 3750
 $Comp
 L Device:R R18
 U 1 1 5C375720
@@ -3467,7 +3467,7 @@ Wire Wire Line
 Connection ~ 10600 1050
 Wire Wire Line
 	10600 1050 11100 1050
-Text Label 11100 1050 0    50   ~ 0
+Text Label 11100 1050 1    50   ~ 0
 OUT_DC
 Wire Wire Line
 	8100 1550 8250 1550
@@ -3580,4 +3580,25 @@ Wire Wire Line
 Wire Wire Line
 	6600 3200 6900 3200
 Connection ~ 6600 3350
+$Comp
+L Device:CP C9
+U 1 1 5E5B0587
+P 7950 3600
+F 0 "C9" H 8068 3646 50  0000 L CNN
+F 1 "100uF" H 8068 3555 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D8.0mm_P3.50mm" H 7988 3450 50  0001 C CNN
+F 3 "~" H 7950 3600 50  0001 C CNN
+	1    7950 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 3450 7950 3350
+Connection ~ 7950 3350
+Wire Wire Line
+	7950 3350 8100 3350
+Wire Wire Line
+	7950 3750 7950 3850
+Wire Wire Line
+	7950 3850 7750 3850
+Connection ~ 7750 3850
 $EndSCHEMATC
