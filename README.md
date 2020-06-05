@@ -1,4 +1,4 @@
-![afterglow](https://github.com/smyp/afterglow/blob/master/artwork/afterglow.png "Afterglow")
+![afterglow](https://github.com/bitfieldlabs/aggi/blob/master/doc/afterglow_logo.png "Afterglow GI")
 
 AFTERGLOW GI is a WPC pinball machine extension board that aims at softening the hard light on/off transitions that result in replacing the original GI incandescent bulbs with LEDs.
 
