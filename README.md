@@ -9,7 +9,9 @@ There are two options to power the Afterglow GI board and all GI LEDs:
 :open_file_folder: [afterglow_gi_nano](https://github.com/bitfieldlabs/aggi/tree/master/afterglow_gi_nano)<br>
 Board revision 1.0 needs to be powered from an external power supply. Recommended is a 12V supply delivering at least 8A.
 
-![afterglow GI](https://github.com/bitfieldlabs/aggi/raw/master/doc/images/pcb_v10_populated.jpg "Afterglow GI")
+![afterglow GI](https://github.com/bitfieldlabs/aggi/raw/master/doc/images/pcb_v10_populated.jpg "Afterglow GI v1.0")
 
 :open_file_folder: [afterglow_gi_nano_ps](https://github.com/bitfieldlabs/aggi/tree/master/afterglow_gi_nano_ps)<br>
 Board revision 1.1 features a power supply and can be attached to the WPC power supply's 6.3V AC connector directly.
+
+![afterglow GI](https://github.com/bitfieldlabs/aggi/raw/master/doc/images/pcb_v11_rendering.jpg "Afterglow GI v1.1")
