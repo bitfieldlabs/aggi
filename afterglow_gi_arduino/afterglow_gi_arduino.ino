@@ -50,13 +50,16 @@
 // Setup
 
 // Afterglow GI version number
-#define AFTERGLOW_GI_VERSION 100
+#define AFTERGLOW_GI_VERSION 101
 
-// Afterglow GI board revision. Currently v1.0.
-#define BOARD_REV 10
+// Afterglow GI board revision. Currently v1.1.
+#define BOARD_REV 11
 
 // turn debug output via serial on/off
 #define DEBUG_SERIAL 1
+
+// voltage measurement pin
+#define V_MEAS_PIN A0
 
 // local time interval (us)
 #define TTAG_INT 1024
@@ -88,6 +91,13 @@
 // Duration of an interpolation step [2^n ms]
 #define BRIGHTNESS_INTERPOL_INTBITS (BRIGHTNESS_INTERPOL_DURBITS - BRIGHTNESS_INTERPOL_STEPBITS)
 
+// Default input voltage (12V)
+#define INPUT_VOLTAGE_DEFAULT 120
+
+// Measure the input voltage (if set to 1)
+// If disabled the hardcoded default voltage (INPUT_VOLTAGE_DEFAULT) is used
+#define MEASURE_VOLTAGE 1
+
 
 //------------------------------------------------------------------------------
 // global variables
@@ -109,7 +119,7 @@ static volatile uint8_t sBrightnessHist[NUM_STRINGS][NUM_BRIGHTNESS+1] = {0}; //
 static volatile uint32_t sBrightnessPot = 0;
 
 static uint8_t sDutyCycleTable[NUM_BRIGHTNESS+1] = {0}; // including 0 for 'off'
-static uint8_t sVoltage = 120; // 12V
+static uint8_t sVoltage = INPUT_VOLTAGE_DEFAULT;
 
 #if DEBUG_SERIAL
 static volatile uint32_t sMinDt[NUM_STRINGS] = {0};
@@ -164,6 +174,13 @@ void setup()
     uint8_t bodBits = (efuse & 0x7);
     Serial.print("efuse BOD ");
     Serial.println((bodBits == 0x07) ? "OFF" : (bodBits == 0x04) ? "4.3V" : (bodBits == 0x05) ? "2.7V" : "1.8V");
+
+#if MEASURE_VOLTAGE
+    // measure the input voltage
+    sVoltage = measureInputVoltage();
+    Serial.print("Input voltage ");
+    Serial.println(sVoltage);
+#endif
 
     // populate the duty cycle table
     populateDutyCycleTable(sVoltage);
@@ -562,3 +579,43 @@ void populateDutyCycleTable(uint8_t voltage)
         Serial.println(sDutyCycleTable[i]);
     }
 }
+
+#if MEASURE_VOLTAGE
+//------------------------------------------------------------------------------
+uint8_t measureInputVoltage()
+{
+    // do some analog readings
+    uint32_t v = 0;
+    for (int i=0; i<10; i++)
+    {
+        int vmeas = analogRead(V_MEAS_PIN);
+        v += vmeas;
+#if DEBUG_SERIAL
+        Serial.println(vmeas);
+#endif
+    }
+
+    // take the average
+    v /= 10;
+
+    // convert to [0.1 volts]
+    // respecting the 1MOhm/300kOhm voltage divider at the input
+    // v has 10 bits [0..1023]
+    // V_in = V_out * ((R1+R2)/R2) = V_out * 4.333
+    v *= 100;
+    v /= 472;
+
+    // paranoia ckeck
+    // force voltage to be between 8V and 15V
+    if ((v<80) || (v>150))
+    {
+        // use default
+#if DEBUG_SERIAL
+        Serial.println("Forcing voltage to default voltage!");
+#endif
+        v = INPUT_VOLTAGE_DEFAULT;
+    }
+    
+    return (uint8_t)v;
+}
+#endif
