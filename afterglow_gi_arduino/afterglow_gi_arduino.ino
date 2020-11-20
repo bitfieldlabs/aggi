@@ -38,7 +38,8 @@
  *  | STR3_OUT | STR 3 PWM     | D10       | DDRB, 2       | Output       |
  *  | STR4_OUT | STR 4 PWM     | D11       | DDRB, 3       | Output       |
  *  | STR5_OUT | STR 5 PWM     | D6        | DDRD, 6       | Output       |
- *  | POT      | Potentiometer | A1        | DDRC, 1       | Input        |
+ *  | V_MEAS   | Voltage Meas  | A0        | DDRC, 0       | Analog Input | 
+ *  | POT      | Potentiometer | A1        | DDRC, 1       | Analog Input |
  *  +----------+---------------+-----------+---------------+--------------+
 */
 
